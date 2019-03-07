@@ -47,63 +47,11 @@ router.get("/getUsers", function (req, res) {
 });
 
 router.post("/register", function(req, res) {
-    let user = User();
-
-    const {f_name, l_name, email, password} = req.body;
-
-    User.findOne({"email": email}, {_id: 1}, function(err, uid)  {
-        if (err || uid) {
-            console.log(`User ${uid} already exists`);
-            return res.status(404).send(JSON.stringify({"status": 0}));
-        } else {
-            bcrypt.hash(password, SALTROUNDS, function(err, hash) {
-                if (err) return json({success: false, error: err});
-
-                if (!f_name || !l_name || !email || !password) {
-                    console.log("fields invalid");
-                    return res.status(404).send(JSON.stringify({"status": 0}));
-                }
-                user.f_name = f_name;
-                user.l_name = l_name;
-                user.email = email;
-                user.password = hash;
-                user.save(err => {
-                    if (err) {
-                        console.log("error in writing to db");
-                        return res.status(404).send(JSON.stringify({"status": 0}));
-                    }
-                    return res.status(201).send(JSON.stringify({"status": 1}));
-                });
-            });
-        }
-    });
+    register(req.body, res);
 });
 
 router.post("/login", function(req, res) {
-    const {email, password} = req.body;
-    console.log(req.body);
-
-    User.findOne({"email": email}, {"password": 1}, function (err, hash) {
-        if (err) {
-            console.log(`password for account tied to ${email} not found`);
-            return res.status(400).send(JSON.stringify({"status": 0}));
-        } else {
-            if (hash == null) {
-                return res.status(401).send(JSON.stringify({"status": "bad-login"}));
-            }
-            bcrypt.compare(password, hash.password, function(err, same) {
-                if (err) {
-                    console.log(`error in comparing password hashes: ${err}`);
-                    return res.status(400).send(JSON.stringify({"status": 0}));
-                }
-                if (same == true) {
-                    return res.status(201).send(JSON.stringify({"status": 1}));
-                }
-                console.log(`password invalid`);
-                return res.status(401).send(JSON.stringify({"status": "bad-login"}));
-            });
-        }
-    });
+    login(req.body, res);
 });
 
 router.post('/deleteAllUsers', function (req, res) {
