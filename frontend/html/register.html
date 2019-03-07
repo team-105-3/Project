@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+        
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+        
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="../css/loader.css">
+        <script src="../js/util.js"></script>
+        <script src="../js/register.js"></script>
+
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Register</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1>
+                Register for SmartCal
+            </h1>
+
+            <div class="modal" tabindex="-1" role="dialog" id="loading">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-danger" id="name-warning" style="display: none">
+                Please enter a valid name.
+            </div>
+            <!--First Name-->
+            <div class="form-group">
+                <label for="fname"><b>First Name</b></label>
+                <input type="text" class="form-control" id="fname" placeholder="Enter First Name">
+            </div>
+
+            <!--Last Name-->
+            <div class="form-group">
+                <label for="lname"><b>Last Name</b></label>
+                <input type="text" class="form-control" id="lname" placeholder="Enter Last Name">
+            </div>
+
+            <div class="alert alert-danger" id="email-warning" style="display: none">
+                Please enter a valid email address.
+            </div>
+
+            <!--Email-->
+            <div class="form-group">
+                <label for="email"><b>Email Address</b></label>
+                <input type="email" class="form-control" id="email" placeholder="Enter Email">
+            </div>
+
+            <div class="alert alert-danger" id="password-warning" style="display: none">
+                Please enter a valid password.
+            </div>
+
+            <!--Password-->
+            <div class="form-group">
+                <label for="password"><b>Password</b></label>
+                <input type="password" class="form-control" id="password" placeholder="Enter Password">
+            </div>
+
+            <!--Submit Button-->
+            <div class="form-group">
+                <button type="submit" class="btn btn-success" onclick="register()">Submit</button>
+            </div>
+        </div>
+    </body>
+</html>

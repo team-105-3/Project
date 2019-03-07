@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+        
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+        
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="../css/loader.css">
+        <script src="../js/util.js"></script>
+        <script src="../js/login.js"></script>
+
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Login</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1>
+                Login to SmartCal
+            </h1>
+
+            <div class="modal" tabindex="-1" role="dialog" id="loading">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-success" id="good-reg" style="display: none">
+                Thank you for registering with SmartCal, please login to continue.
+            </div>
+
+            <div class="alert alert-warning" id="bad-reg" style="display: none">
+                This email address has already been registered,
+                please login with that email address or 
+                <a class="alert-link" href="register.html">click here to register with a different email address.</a>
+            </div>
+
+            <div class="alert alert-danger" id="bad-login" style="display: none">
+                Wrong email address or password.
+            </div>
+
+            <div class="alert alert-danger" id="email-warning" style="display: none">
+                Please enter a valid email address.
+            </div>
+
+            <!--Email-->
+            <div class="form-group">
+                <label for="email"><b>Email Address</b></label>
+                <input type="email" class="form-control" id="email" placeholder="Enter Email">
+            </div>
+
+            <div class="alert alert-danger" id="password-warning" style="display: none">
+                Please enter a valid password.
+            </div>
+
+            <!--Password-->
+            <div class="form-group">
+                <label for="password"><b>Password</b></label>
+                <input type="password" class="form-control" id="password" placeholder="Enter Password">
+            </div>
+
+            <!--Submit Button-->
+            <div class="form-group">
+                <button type="submit" class="btn btn-success" onclick="register()">Submit</button>
+            </div>
+        </div>
+
+        <script>
+            window.onload = function() {
+                var urlParams = new URLSearchParams(window.location.search);
+                if(!urlParams.has('q')) {
+                    document.getElementById('good-reg').style.display = "none";
+                    document.getElementById('bad-reg').style.display = "none";
+                } else if(parseInt(urlParams.get('q')) == 1) {
+                    document.getElementById('good-reg').style.display = "block";
+                } else if(parseInt(urlParams.get('q')) == 0) {
+                    document.getElementById('bad-reg').style.display = "block";
+                }
+            }
+        </script>
+    </body>
+</html>
