@@ -34,3 +34,4 @@ function validateEmail(email) {
 function validatePassword(password) {
     return !emptyString(password);
 }
+
