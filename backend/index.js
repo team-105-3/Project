@@ -1,3 +1,4 @@
+//3rd party libraries
 var express = require('express');
 const mongoose = require("mongoose");
 const app = express();
@@ -9,9 +10,16 @@ const SALTROUNDS = 10;
 var cors = require('cors');
 cors({credentials: true, origin: true});
 
+
+//our libraries
 const register = require("./back-js/register");
 const login = require("./back-js/login");
 const User = require("./back-js/user");
+const createEvent = require('./back-js/createEvent');
+const getEvents = require('./back-js/getEvents');
+const createProject = require('./back-js/createProject');
+const getProjects = require('./back-js/getProjects');
+
 
 const dbRoute = "mongodb://127.0.0.1:27017/test";
 
@@ -52,6 +60,22 @@ router.post("/register", function(req, res) {
 
 router.post("/login", function(req, res) {
     login(req.body, res);
+});
+
+router.post("/createEvent", function(req, res) {
+    createEvent(req.body, res);
+});
+
+router.post("/createProject", function(req, res) {
+    createProject(req.body, res);
+});
+
+router.post("/getEvents", function(req, res) {
+    getEvents(req.body, res);
+});
+
+router.post("/getProjects", function(req, res) {
+    getProjects(req.body, res);
 });
 
 router.post('/deleteAllUsers', function (req, res) {
