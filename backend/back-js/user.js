@@ -7,7 +7,9 @@ const UserSchema = new Schema(
         l_name: String,
         email: String,
         password: String,
-        key: String
+        key: String,
+        events: Array,
+        projects: Array
     },
     {timestamps: true}
 );
