@@ -13,6 +13,17 @@ User.prototype.addEvent = function(event) {
     this.events.push(event);
 }
 
+User.prototype.isEventOnDay = function(date, event) {
+    var s_parts = event.startDate.split('/');
+    var eventStartDate = new Date(s_parts[2], s_parts[0]-1, s_parts[1]);
+
+    var e_parts = event.endDate.split('/');
+    var eventEndDate = new Date(e_parts[2], e_parts[0] - 1, e_parts[1]);
+
+    
+
+}
+
 /**
  * Pushes a new project into the user class object
  */

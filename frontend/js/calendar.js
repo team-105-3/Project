@@ -12,12 +12,17 @@ function createCalendarEvent() {
     var endDate = document.getElementById('ed').value;
     var desc = document.getElementById('e_desc').value;
 
+    var rec = document.getElementById('rec').value;
+    var timeframe = document.getElementById('timeframe').value;
+
+    console.log(rec, timeframe);
+
     var fail = false;
     if(emptyString(title) || emptyString(startTime) || emptyString(endTime) || emptyString(startDate)) {
         fail = true;
     }
 
-    if(recurring && emptyString(endDate)) {
+    if(recurring && (emptyString(endDate) || rec == "Choose..." || timeframe == "Choose...")) {
         fail = true;
     }
 

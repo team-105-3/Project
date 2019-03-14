@@ -1,4 +1,4 @@
-function Event(title, startTime, endTime, recurring, startDate, endDate, description) {
+function Event(title, startTime, endTime, recurring, startDate, endDate, description, recurrency, timeframe) {
     this.title = title;
     this.startTime = startTime;
     this.endTime = endTime;
@@ -6,4 +6,6 @@ function Event(title, startTime, endTime, recurring, startDate, endDate, descrip
     this.startDate = startDate;
     this.endDate = endDate;
     this.description = description;
+    this.recurrency = recurrency;
+    this.timeframe = timeframe;
 }
