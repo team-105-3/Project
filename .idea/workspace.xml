@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="78692140-1bb8-4bb1-8a28-963d246712d6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/frontend/html/calendar.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/html/calendar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/js/calendar.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/js/calendar.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,12 +12,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/frontend/html/calendar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="39" column="36" selection-start-line="39" selection-start-column="36" selection-end-line="39" selection-end-column="36" />
+            <state relative-caret-position="346">
+              <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
               <folding>
+                <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#li#3;n#ul#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#th#1;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#th#2;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -32,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/js/calendar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="562">
-              <caret line="109" column="28" selection-start-line="109" selection-start-column="28" selection-end-line="109" selection-end-column="28" />
+            <state relative-caret-position="502">
+              <caret line="105" lean-forward="true" selection-start-line="105" selection-end-line="105" />
             </state>
           </provider>
         </entry>
@@ -75,14 +78,14 @@
         <option value="$PROJECT_DIR$/frontend/js/dynamicCalendar.js" />
         <option value="$PROJECT_DIR$/frontend/js/util.js" />
         <option value="$PROJECT_DIR$/frontend/js/calender.js" />
-        <option value="$PROJECT_DIR$/frontend/html/calendar.html" />
         <option value="$PROJECT_DIR$/frontend/js/calendar.js" />
+        <option value="$PROJECT_DIR$/frontend/html/calendar.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="50" />
-    <option name="width" value="1380" />
+    <option name="width" value="967" />
     <option name="height" value="987" />
   </component>
   <component name="ProjectView">
@@ -130,7 +133,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552580650102" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552581522165" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
@@ -158,18 +161,18 @@
       <workItem from="1552247936272" duration="2614000" />
       <workItem from="1552430989749" duration="159000" />
       <workItem from="1552576103284" duration="119000" />
-      <workItem from="1552576249307" duration="4328000" />
+      <workItem from="1552576249307" duration="5033000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7220000" />
+    <option name="totallyTimeSpent" value="7925000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="50" width="1380" height="987" extended-state="0" />
+    <frame x="0" y="50" width="967" height="987" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.068759345" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21297297" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -224,11 +227,22 @@
     <entry file="file://$PROJECT_DIR$/frontend/js/login.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/js/calendar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="502">
+          <caret line="105" lean-forward="true" selection-start-line="105" selection-end-line="105" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/html/calendar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="39" column="36" selection-start-line="39" selection-start-column="36" selection-end-line="39" selection-end-column="36" />
+        <state relative-caret-position="346">
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
           <folding>
+            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#li#3;n#ul#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h2#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#th#1;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#th#2;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -238,13 +252,6 @@
             <element signature="n#style#0;n#th#6;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#th#7;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/js/calendar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="562">
-          <caret line="109" column="28" selection-start-line="109" selection-start-column="28" selection-end-line="109" selection-end-column="28" />
         </state>
       </provider>
     </entry>
