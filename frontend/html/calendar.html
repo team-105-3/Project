@@ -30,7 +30,7 @@
         <title>My Calendar</title>
     </head>
 
-    <body onload="clock()">
+    <body onload="clock(); displayDate()">
 
         <h1>Welcome to your smartcal homepage.</h1>
 
@@ -40,7 +40,7 @@
         <table id="schedule" style="width:100%">
 		  <tr>
 		  	<th></th>
-		  	<th style="width:14.28%">Sunday</th>
+		  	<th style="width:14.28%" id="Sunday"></th>
 		    <th style="width:14.28%">Monday</th>
 		    <th style="width:14.28%">Tuesday</th> 
 		    <th style="width:14.28%">Wednesday</th>
