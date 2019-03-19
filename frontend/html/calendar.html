@@ -171,6 +171,34 @@
                                 </script>
                             </div>
                             
+                            <div class="row">
+                                <div class="col">
+                                    <label for="rec">Recurrence</label>
+                                    <select disabled class="custom-select mr-sm-2" id="rec">
+                                        <option selected>Choose...</option>
+                                        <option value="1">Every</option>
+                                        <option value="2">Every Other</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label class="mr-sm-2" for="timeframe">Timeframe</label>
+                                    <select disabled class="custom-select mr-sm-2 my-1" id="timeframe">
+                                        <option selected>Choose...</option>
+                                        <option value="1">Day</option>
+                                        <option value="2">Week</option>
+                                        <option value="3">Month</option>
+                                        <option value="4">Year</option>
+                                    </select>
+                                </div>
+                                <script>
+                                    document.getElementById('recurring').onchange = function() {
+                                        document.getElementById('rec').disabled = !this.checked;
+                                        document.getElementById('timeframe').disabled = !this.checked;
+                                    };
+                                </script>
+                            </div>
+                            <br>
+                            
                             <!--Description-->
                             <div class="form-group">
                                 <label for="e_desc">Event Description</label>
