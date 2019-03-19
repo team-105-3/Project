@@ -18,7 +18,10 @@ function register(data, res) {
     var password = data.password;
 
     //user key for calendar requests
-    var key = sha256(firstName + password + lastName);
+    var key = sha256(firstName + password + lastName + email);
+    var resetKey = sha256(key+password);
+
+    console.log(firstName, lastName, email, password, key, resetKey);
 
     //finds users in database by email
     //if they don't exist, add them if they have good credentials
@@ -46,6 +49,7 @@ function register(data, res) {
                 user.email = email;
                 user.password = hash;
                 user.key = key;
+                user.resetKey = resetKey;
                 user.save(err => {
                     if (err) {
                         console.log("error in writing to db");
@@ -55,7 +59,6 @@ function register(data, res) {
                     }
                     code = 201;
                     status = 1;
-                    console.log(code, status);
                     return res.status(code).send(JSON.stringify({"status": status}));
                 });
             });
