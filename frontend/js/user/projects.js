@@ -1,7 +1,8 @@
-function Project(title, startTime, endTime, date, description) {
+function Project(title, startDate, dueDate, expectedTimeHours, expectedTimeMinutes, description) {
     this.title = title;
-    this.startTime = startTime;
-    this.endTime = endTime;
-    this.date = date;
+    this.startTime = startDate;
+    this.dueDate = dueDate;
+    this.expectedTimeHours = expectedTimeHours;
+    this.expectedTimeMinutes = expectedTimeMinutes;
     this.description = description;
 }

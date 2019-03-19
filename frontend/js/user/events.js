@@ -9,3 +9,11 @@ function Event(title, startTime, endTime, recurring, startDate, endDate, descrip
     this.recurrency = recurrency;
     this.timeframe = timeframe;
 }
+
+Event.prototype.display = function(parent) {
+    var container = document.createElement("div");
+    container.className = "event";
+    var p = document.createTextNode(this.title);
+    container.appendChild(p);
+    document.body.appendChild(container);
+}

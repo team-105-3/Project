@@ -31,6 +31,7 @@
         <script src="../js/user/projects.js"></script>
         <script src="../js/calendar.js"></script>
         <script src="../js/user/user.js"></script>
+        <link rel="stylesheet" href="../css/event.css">
     </head>
     <body>
         <div class="containter">
@@ -194,6 +195,7 @@
                                     document.getElementById('recurring').onchange = function() {
                                         document.getElementById('rec').disabled = !this.checked;
                                         document.getElementById('timeframe').disabled = !this.checked;
+                                        document.getElementById('ed').disabled = !this.checked;
                                     };
                                 </script>
                             </div>
@@ -223,7 +225,7 @@
                         <h5 class="modal-title" id="exampleModalLongTitle">Create Project</h5>
                         </div>
     
-                        <!--Create Event Form-->
+                        <!--Create Project Form-->
                         <div class="modal-body">
                             <!--Title-->
                             <div class="form-group">
@@ -234,7 +236,7 @@
                             <div class="row">
                                 <div class='col-sm-6'>
                                     <div class="form-group">
-                                        <label for="p_start_time">Start Time</label>
+                                        <label for="p_start_time">Start Date</label>
                                         <div class='input-group date' id='datetimepickerPS'>
                                             <input id="pst" type='text' class="form-control entry" id="p_start_time"/>
                                             <span class="input-group-addon">
@@ -246,13 +248,13 @@
                                 <script type="text/javascript">
                                     $(function () {
                                         $('#datetimepickerPS').datetimepicker({
-                                            format: 'LT'
+                                            format: "MM/DD/YYYY"
                                         });
                                     });
                                 </script>
                                 <div class='col-sm-6'>
                                     <div class="form-group">
-                                        <label for="p_end_time">End Time</label>
+                                        <label for="p_end_time">Due Date</label>
                                         <div class='input-group date' id='datetimepickerPE'>
                                             <input id="pet" type='text' class="form-control entry" id="p_end_time"/>
                                             <span class="input-group-addon">
@@ -264,31 +266,39 @@
                                 <script type="text/javascript">
                                     $(function () {
                                         $('#datetimepickerPE').datetimepicker({
-                                            format: 'LT'
+                                            format: "MM/DD/YYYY"
                                         });
                                     });
                                 </script>
                             </div>
     
-                            <!--Date Input-->
+                            <!--Time Input-->
+                            <div class="row">
+                                <div class='col'>
+                                    <h4>Expected amount of time to finish:</h4>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class='col-md-6'>
                                     <div class="form-group">
-                                        <label for="p_date">Start Date</label>
-                                        <div class='input-group date' id='p_date'>
-                                            <input id="pd" type='text' class="form-control entry" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
+                                    <label for="p_hours">Hours</label>
+                                        <input id="p_hours" type='number' class="form-control entry" />
+                                    </div>
+                                </div>
+                                <div class='col-md-6'>
+                                    <div class="form-group">
+                                    <label for="p_min">Minutes</label>
+                                        <input id="p_min" type='number' class="form-control entry" />
                                     </div>
                                 </div>
                                 <script type="text/javascript">
-                                    $(function () {
-                                        $('#p_date').datetimepicker({
-                                            format: "MM/DD/YYYY"
-                                        });
-                                    });
+                                    document.getElementById('p_hours').onchange = function() {
+                                        this.value = Math.max(0, parseInt(this.value));
+                                    }
+
+                                    document.getElementById('p_min').onchange = function() {
+                                        this.value = Math.max(0, Math.min(59, parseInt(this.value)));
+                                    }
                                 </script>
                             </div>
                             

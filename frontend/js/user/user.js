@@ -4,6 +4,8 @@
 function User() {
     this.events = [];
     this.projects = [];
+    this.currentEvents = [];
+    this.currentUserDate = new Date();
 }
 
 /**
@@ -11,17 +13,80 @@ function User() {
  */
 User.prototype.addEvent = function(event) {
     this.events.push(event);
+    this.update();
 }
 
 User.prototype.isEventOnDay = function(date, event) {
     var s_parts = event.startDate.split('/');
-    var eventStartDate = new Date(s_parts[2], s_parts[0]-1, s_parts[1]);
+    var currentDate = new Date(parseInt(s_parts[2]), parseInt(s_parts[0]-1), parseInt(s_parts[1]));
+
+    if(!event.recurring) {
+        return datesEqual(currentDate, date);
+    }
 
     var e_parts = event.endDate.split('/');
-    var eventEndDate = new Date(e_parts[2], e_parts[0] - 1, e_parts[1]);
+    var eventEndDate = new Date(parseInt(e_parts[2]), parseInt(e_parts[0] - 1), parseInt(e_parts[1]));
 
-    
+    var multiplier = event.recurrency;
 
+    while(eventEndDate > currentDate && date > currentDate) {
+        if(datesEqual(currentDate, date)) {
+            return true;
+        } else {
+            if(event.timeframe == 1) {
+                currentDate.setDate(currentDate.getDate() + 1 * multiplier);
+            } else if (event.timeframe == 2) {
+                currentDate.setDate(currentDate.getDate() + 14 * multiplier);
+            } else if (event.timeframe == 3) {
+                currentDate.setMonth(currentDate.getMonth() + 1 * multiplier);
+            } else if (event.timeframe == 4) {
+                currentDate.setFullYear(currentDate.getFullYear() + 1 * multiplier);
+            }
+        }
+    }
+
+    return false;
+}
+
+User.prototype.getAllEventsOnDay = function(date) {
+    var dailyEvents = [];
+
+    this.events.forEach(event => {
+        if(this.isEventOnDay(date, event)) {
+            dailyEvents.push(event);
+        }
+    });
+
+    return dailyEvents;
+}
+
+User.prototype.getEventsForWeek = function(date) {
+    var dateCopy = new Date(date);
+    var firstDay = new Date(dateCopy.setDate(dateCopy.getDate() - dateCopy.getDay()));
+
+    var currentDate = new Date(firstDay);
+
+    var weeklyEvents = [];
+
+    for(var i = 0; i < 7; i++) {
+        var dailyEvents = [];
+        currentDate.setDate(currentDate.getDate() + Math.min(i, 1));
+        dailyEvents = this.getAllEventsOnDay(currentDate);
+        weeklyEvents.push(dailyEvents);
+    }
+
+    return weeklyEvents;
+}
+
+User.prototype.update = function() {
+    this.currentEvents = this.getEventsForWeek(this.currentUserDate);
+    //console.log(this.currentEvents);
+}
+
+function datesEqual(date1, date2) {
+    return date1.getDate() == date2.getDate() 
+        && date1.getMonth() == date2.getMonth()
+        && date1.getFullYear() == date2.getFullYear();
 }
 
 /**
@@ -50,7 +115,8 @@ function getAllEvents() {
                 let event = new Event(  element.title, element.startTime, 
                                         element.endTime, element.recurring, 
                                         element.startDate, element.endDate, 
-                                        element.description);
+                                        element.description, element.recurrency, 
+                                        element.timeframe);
                 
                 user.addEvent(event);
             });
@@ -76,9 +142,9 @@ function getAllProjects() {
             console.log("System is broken. Invalid key. Try refreshing...");
         } else {
             status.forEach(element => {
-                let project = new Project(  element.title, element.startTime, 
-                                            element.endTime, element.date, 
-                                            element.description);
+                let project = new Project(  element.title, element.startDate, 
+                                            element.dueDate, element.expectedTimeHours,
+                                            element.expectedTimeMinutes, element.description);
                 
                 user.addProject(project);
             });
