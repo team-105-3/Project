@@ -5,13 +5,12 @@ const app = express();
 const router = express.Router();
 const logger = require("morgan");
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
-const SALTROUNDS = 10;
 var cors = require('cors');
 cors({credentials: true, origin: true});
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
+const cron = require('node-cron');
 
 //our libraries
 const register = require("./back-js/register");
@@ -23,6 +22,7 @@ const createProject = require('./back-js/createProject');
 const getProjects = require('./back-js/getProjects');
 const sendPasswordRecovery = require('./back-js/passwordRecovery');
 const resetPassword = require('./back-js/resetPassword');
+const sendProjectReminders = require('./back-js/emailReminders')
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly ' + 'https://www.googleapis.com/auth/gmail.send'];
@@ -186,6 +186,11 @@ router.post('/deleteAllUsers', function (req, res) {
     } else {
         return res.status(401).send(JSON.stringify({"status": 0}));
     }
+});
+
+cron.schedule("0 7 * * *", function() {
+    console.log('Sent email reminders for today');
+    sendProjectReminders();
 });
 
 app.use(cors());

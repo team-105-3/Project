@@ -1,5 +1,4 @@
 var Base64 = require('js-base64').Base64;
-const readline = require('readline');
 var fs = require('fs');
 const {google} = require('googleapis');
 
