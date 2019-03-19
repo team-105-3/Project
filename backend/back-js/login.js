@@ -9,7 +9,6 @@ const bcrypt = require('bcrypt');
  */
 function login(data, res) {
     var email = data.email;
-    var password = data.password;
 
     User.findOne({"email": email}, {"password": 1, "key": 1}, function (err, uInfo) {
         if (err) {
@@ -19,6 +18,7 @@ function login(data, res) {
             if (uInfo == null) {
                 return res.status(401).send(JSON.stringify({"status": "bad-login"}));
             }
+            console.log(uInfo, data.password);
             bcrypt.compare(data.password, uInfo.password, function(err, same) {
                 if (err) {
                     console.log(`error in comparing password hashes: ${err}`);

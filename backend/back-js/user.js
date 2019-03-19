@@ -9,7 +9,8 @@ const UserSchema = new Schema(
         password: String,
         key: String,
         events: Array,
-        projects: Array
+        projects: Array,
+        resetKey: String
     },
     {timestamps: true}
 );
