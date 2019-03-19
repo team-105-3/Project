@@ -36,7 +36,7 @@ function createCalendarEvent() {
         return;
     }
 
-    var event = new Event(title, startTime, endTime, recurring, startDate, endDate, desc);
+    var event = new Event(title, startTime, endTime, recurring, startDate, endDate, desc, rec, timeframe);
 
     var idKey = new URL(window.location.href).searchParams.get('key');
 
@@ -77,13 +77,14 @@ function createCalendarEvent() {
  */
 function createCalendarProject() {
     var title = document.getElementById('p_title').value;
-    var startTime = document.getElementById('pst').value;
-    var endTime = document.getElementById('pet').value;
-    var date = document.getElementById('pd').value
+    var startDate = document.getElementById('pst').value;
+    var dueDate = document.getElementById('pet').value;
+    var expTimeHours = document.getElementById('p_hours').value;
+    var expTimeMin = document.getElementById('p_min').value;
     var desc = document.getElementById('p_desc').value;
 
     var fail = false;
-    if(emptyString(title) || emptyString(startTime) || emptyString(endTime) || emptyString(date)) {
+    if(emptyString(title) || emptyString(startDate) || emptyString(dueDate) || emptyString(expTimeHours) || emptyString(expTimeMin)) {
         fail = true;
     }
 
@@ -97,7 +98,7 @@ function createCalendarProject() {
         return;
     }
 
-    var project = new Project(title, startTime, endTime, date, desc);
+    var project = new Project(title, startDate, dueDate, expTimeHours, expTimeMin, desc);
 
     var idKey = new URL(window.location.href).searchParams.get('key');
 
