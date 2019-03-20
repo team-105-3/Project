@@ -1,3 +1,5 @@
+var connectUrl = 'http://127.0.0.1:8081';
+
 /**
  * Validates a users name to make sure it is not an empty string.
  * Returns true if both first and last names are valid strings, false if one or both names are invalid.

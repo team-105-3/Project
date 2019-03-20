@@ -26,9 +26,7 @@ function register() {
         "email": email,
         "password": password
     }
-
-    var connectUrl = "http://127.0.0.1:8081";
-
+    
     //create ajax request
     var request = new XMLHttpRequest();
 

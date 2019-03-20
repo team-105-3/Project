@@ -1,1 +1,5 @@
 backend/node_modules/
+backend/pwrd.txt
+backend/credentials.json
+backend/token.json
+.DS_Store
