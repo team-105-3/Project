@@ -1,6 +1,11 @@
 const User = require('./user');
 
-function getEvents(data, res) {
+/**
+ * Gets all of a users projects
+ * @param {*} data 
+ * @param {*} res 
+ */
+function getProjects(data, res) {
     var key = data.key;
 
     User.findOne({"key": key}, function(err, u) {
@@ -13,4 +18,4 @@ function getEvents(data, res) {
     
 }
 
-module.exports = getEvents;
+module.exports = getProjects;

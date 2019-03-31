@@ -1,3 +1,7 @@
+
+/**
+ * Sends request to server to register user
+ */
 function register() {
     //get inputted data
     var firstName = document.getElementById("fname").value.trim();

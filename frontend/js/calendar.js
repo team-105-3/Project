@@ -134,17 +134,17 @@ function createCalendarProject() {
 }
 
 /**
- * Clears all entries in every form.
+ * Clears all entries in every form for event and project creation
  */
 function clearAllEntries() {
     var entries = document.querySelectorAll('.entry');
     entries.forEach(element => {
         element.value = '';
     });
-var background = document.body.style.backgroundColor;
+    var background = document.body.style.backgroundColor;
+}
 
-function clock()
-{
+function clock() {
     var d = new Date();
     var date = d.getDate();
     var year = d.getFullYear();
@@ -154,8 +154,7 @@ function clock()
     document.getElementById("date").innerHTML=month+" "+year;
 }
 
-function displayDate()
-{
+function displayDate() {
     var currentDate = new Date().getDate();
     var month = new Date().getMonth() + 1;
     var dayOfWeek = new Date().getDay()+1;
@@ -259,5 +258,4 @@ function displayDate()
         default:
         // code block
     }
-}
 }

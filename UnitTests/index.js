@@ -4,7 +4,9 @@ const cron = require('node-cron');
 const runTestSuite = require('./testsuite');
 
 cron.schedule(' 0 7 * * *', function() {
-
+  /*
+  TODO: Add test scheduling for CI so tests are automated
+  */
 });
 
 app.listen(8000, () => {

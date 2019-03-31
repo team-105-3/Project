@@ -1,3 +1,6 @@
+/**
+ * Sends request to server to reset users password
+ */
 function resetPassword() {
     var key = document.getElementById('key').value;
     var newPassword = document.getElementById('newPassword').value;

@@ -16,6 +16,9 @@ User.prototype.addEvent = function(event) {
     this.update();
 }
 
+/**
+ * Checks if an event recurs / lands on given day
+ */
 User.prototype.isEventOnDay = function(date, event) {
     var s_parts = event.startDate.split('/');
     var currentDate = new Date(parseInt(s_parts[2]), parseInt(s_parts[0]-1), parseInt(s_parts[1]));
@@ -48,6 +51,9 @@ User.prototype.isEventOnDay = function(date, event) {
     return false;
 }
 
+/**
+ * Returns all of a users events on a given day
+ */
 User.prototype.getAllEventsOnDay = function(date) {
     var dailyEvents = [];
 
@@ -60,6 +66,9 @@ User.prototype.getAllEventsOnDay = function(date) {
     return dailyEvents;
 }
 
+/**
+ * Returns all of a users events for a given week based on given day
+ */
 User.prototype.getEventsForWeek = function(date) {
     var dateCopy = new Date(date);
     var firstDay = new Date(dateCopy.setDate(dateCopy.getDate() - dateCopy.getDay()));
@@ -78,11 +87,19 @@ User.prototype.getEventsForWeek = function(date) {
     return weeklyEvents;
 }
 
+/**
+ * Update a users weekly events based on given date
+ */
 User.prototype.update = function() {
     this.currentEvents = this.getEventsForWeek(this.currentUserDate);
     //console.log(this.currentEvents);
 }
 
+/**
+ * Determines if two dates are equal in value (same day, month, year)
+ * @param {*} date1 
+ * @param {*} date2 
+ */
 function datesEqual(date1, date2) {
     return date1.getDate() == date2.getDate() 
         && date1.getMonth() == date2.getMonth()
