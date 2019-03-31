@@ -14,3 +14,19 @@ To run backend:
       Run `mongod --port 27017`
 5. Back in your first terminal window, run `npm start`
 6. Navigate to the `index.html` file in the frontend directory and open in your browser
+
+
+To Use the test suite:
+1. Navigate to `UnitTests` folder in terminal
+2. Run `npm update` to install necessary packages
+3. Open up two terminal windows
+4. In the first window, start the backend server like normal
+5. In the second window, cd back into the `UnitTests` folder, then run `node index.js` to run tests
+6. The tests will run against the backend API, if a test fails that means one of our API's is messed up
+
+
+To Create Tests for the Backend:
+1. Create a new file inside the `tests` folder inside `UnitTests`
+2. Copy the template inside the `blanktest.txt` into your new file
+3. Modify the specified values in your file to create your test case
+4. Inside the `TestOrder.txt` file insert the name of your newly created test file, keep in mind order matters. Tests will be executed from top to bottom, so make sure you have them in the correct order of execution. (EX: a 'login-success' test will fail if a user hasn't registered yet, so make sure you have some sort of `register-user` test before it for it to execute correctly)
