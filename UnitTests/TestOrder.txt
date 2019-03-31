@@ -1,0 +1,6 @@
+deleteAllUsers
+loginFailure_UDNE
+registerSuccess
+loginFailure_BLGN
+loginSuccess
+registerFailure
