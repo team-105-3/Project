@@ -1,30 +1,54 @@
-/*table{
-    border-collapse: collapse;
- }
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
 
- table, td, th{
-    border: 1px solid black;
-    height: 0.1px;
- }
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 100vh;
+  background-color: lightgray;
+}
 
-  .row.content {height: 450px}
-  
-  .sidenav {
-    padding-top: 20px;
-    background-color: #f1f1f1;
-    height: 100%;
-  }
-  
-  footer {
-    background-color: #555;
-    color: white;
-    padding: 15px;
-  }
-  
-  @media screen and (max-width: 767px) {
-    .sidenav {
-      height: auto;
-      padding: 15px;
-    }
-    .row.content {height:auto;} 
- }*/
+#sidebar.active {
+  margin-left: -250px;
+}
+
+.aaa {
+  width: 100%;
+}
+
+.aaa:hover{
+  background-color: gray;
+  color: whitesmoke;
+}
+
+.calendar {
+  background-color: aqua;
+  width: 100%;
+  height: 100%;
+}
+
+#content {
+  width: 100%;
+}
+
+.navbar {
+  border-radius: 0px !important;
+}
+
+.tgl {
+  background-color: #343a40;
+  border-radius: 2px;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+.tgl:hover {
+  border-color: mediumturquoise;
+}
+
+.tgl .navbar-toggler-icon :hover{
+  color: mediumturquoise;
+}

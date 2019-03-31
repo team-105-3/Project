@@ -47,10 +47,52 @@
         <script src="../js/calendar.js"></script>
         <script src="../js/user/user.js"></script>
         <link rel="stylesheet" href="../css/event.css">
+        <link rel="stylesheet" href="../css/calendar.css">
     </head>
     <body onload="clock(); displayDate()">
         <div class="containter">
-            <p>Welcome to your smartcal homepage.</p>
+            <div class="wrapper">
+                <nav id="sidebar">
+                    <div class="sidebar-header">
+                        <h3>Header</h3>
+                    </div>
+                    <ul class="list-unstyled components">
+                        <p>Heading</p>
+                        <li class="active">
+                            <div class="aaa btn" data-toggle="modal" data-target="#createEventModal" id="createEvent">
+                                Create Event
+                            </div>
+                        </li>
+                        <li>
+                            <div class="aaa btn" data-toggle="modal" data-target="#createProjectModal" id="createProject">
+                                Create Project
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <div id="content">
+                    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                        <ul class="navbar-nav mr-auto">
+                            <button type="button" id="sidebarCollapse" class="tgl">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <li class='nav-item'>
+                                <a class="navbar-brand" href="#">&lt;</a>
+                            </li>
+                            <li class="nav-item">
+                                <p class="navbar-brand"> Today's Date </p>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <script>
+                $(document).ready(function () {
+                    $('#sidebarCollapse').on('click', function () {
+                        $('#sidebar').toggleClass('active');
+                    });
+                });
+            </script>
 
             <div class="modal" tabindex="-1" role="dialog" id="loading">
                 <div class="modal-dialog" role="document">
@@ -61,16 +103,6 @@
                     </div>
                 </div>
             </div>
-    
-            <!--Create Event button-->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createEventModal" id="createEvent">
-                Create Event
-            </button>
-    
-            <!--Create Project-->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createProjectModal" id="createProject">
-                Create Project
-            </button>
             
             <!--Event Creation Modal-->
             <div class="modal fade" id="createEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -379,372 +411,5 @@
             getAllProjects();
             console.log(user);
         </script>
-        <div class = "container">   
-              <div class="container-fluid text-center">    
-                 <div class="row content">
-                    <div class="col-sm-8 text-left"> 
-                       <h2 id="date" style="text-align: center"></h2>
-                       <div class="w3-container">
-                          <table id="schedule" class="table">
-                             <tr>
-                                <th></th>
-                                <th style="width:14.28%" id="Sun"></th>
-                                <th style="width:14.28%" id="Mon"></th>
-                                <th style="width:14.28%" id="Tues"></th>
-                                <th style="width:14.28%" id="Wedn"></th>
-                                <th style="width:14.28%" id="Thurs"></th>
-                                <th style="width:14.28%" id="Fri"></th>
-                                <th style="width:14.28%" id="Sat"></th>
-                             </tr>
-                             <tr>
-                                <td>8:00am</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>8:30am</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                               </tr>
-                               <tr>
-                                <td>9:00am</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>9:30am</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>10:00am</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>10:30am</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>11:00am</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>11:30am</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>12:00pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>12:30pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>1:00pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>1:30pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>2:00pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>2:30pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>3:00pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>3:30pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>4:00pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>4:30pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>5:00pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>5:30pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>6:00pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>6:30pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>7:00pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>7:30pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>8:00pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>8:30pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>9:00pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>9:30pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>10:00pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>10:30pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>11:00pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>11:30pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>12:00pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                             <tr>
-                                <td>12:30pm</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                             </tr>
-                          </table>
-                       </div>
-                    </div>
-           
-                    <div class="col-sm-2 sidenav">
-                    
-                    </div>
-                 </div>
-              </div>
-        </div>
     </body>
 </html>

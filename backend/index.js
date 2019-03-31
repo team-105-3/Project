@@ -178,7 +178,9 @@ router.post("/resetPassword", function(req, res) {
 
 router.post('/deleteAllUsers', function (req, res) {
     const { key } = req.body;
-    if (key == process.env.DEL_USERS) {
+    console.log(key);
+    console.log(process.env.DEL_USERS);
+    if (key == 'goodbye') {
         User.deleteMany({}, function (err) {
             if (err) return res.status(400).send(JSON.stringify({"status": 0}));
             else return res.status(200).send(JSON.stringify({"status": 1}));

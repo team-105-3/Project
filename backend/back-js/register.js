@@ -21,7 +21,7 @@ function register(data, res) {
     var key = sha256(firstName + password + lastName + email);
     var resetKey = sha256(key+password);
 
-    console.log(firstName, lastName, email, password, key, resetKey);
+    //console.log(firstName, lastName, email, password, key, resetKey);
 
     //finds users in database by email
     //if they don't exist, add them if they have good credentials
