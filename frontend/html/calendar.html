@@ -1,666 +1,647 @@
 <!DOCTYPE html>
 <html>
-    <head>
+	<head>
+		<title>Scheduler</title>
 
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
-        <!-- Popper JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+		<!-- used to link with css -->
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+		<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
-        <link rel="stylesheet" href="../css/loader.css">
+	</head>
+	<body onload="clock(); displayDate()">
+		<div id="month_header" class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<header class="masthead container-fluid">
+				  	<div class="container">
+				    	<center><p id="date">Month Year</p></center>  
+				  	</div>
+				</header>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<nav class="navbar navbar-inverse">
+					<div class="container-fluid">
+
+					    <div class="navbar-header">
+					      	<span style="color:white; font-size:15px;">Username</span>
+					    </div>
+
+						<ul class="nav navbar-nav">
+						    <li class="active"><a href="#">Week</a></li>
+						    <li><a href="#">Month</a></li>
+						    <li><a href="#">Year</a></li>
+						</ul>
+
+						<ul class="nav navbar-nav navbar-right">
+					      	<li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> LogOut</a></li>
+					    </ul>
+
+					</div>
+				</nav>
+			</div>
+	   	</div>
+
+	   	<a href="#" class="previous round">&#8249;</a>
+		<a href class="next round">&#8250;</a>
+
+	   	<div id="sch_cal" class="row">
+	   		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="background-color: gray;">
+	   			<center><h6>Start time</h6></center>
+	   			<input type="text" class="form-control" id="stime" placeholder="8:00">
+	   			<input id="toggle-one" checked type="checkbox">
+				<script>
+				  	$(function() {
+				    	$('#toggle-one').bootstrapToggle({
+					      on: 'AM',
+					      off: 'PM'
+					    });
+				  	})
+				</script>
+
+	   			<br>
+	   			<input type="text" class="form-control" id="etime" placeholder="9:00">
+	   			<input id="toggle-two" type="checkbox">
+				<script>
+				  	$(function() {
+				    	$('#toggle-two').bootstrapToggle({
+					      on: 'AM',
+					      off: 'PM'
+					    });
+				  	})
+				</script>
+
+	   			<br>
+	   			<center><h6>Add</h6></center>
+	   			<input type="text" class="form-control" id="todo" placeholder="To Do">
+	   			<input type="text" class="form-control" id="hlong" placeholder="How Long (hr)">
+	   			<center><h6>Remove</h6></center>
+	   			<input type="text" class="form-control" id="remove" placeholder="Things to delete">
+	   			<br>
 
 
-
-    	<style>
-    		table {
-			  border-collapse: collapse;
-			}
-
-			table, td, th {
-			  border: 1px solid black;
-			}
-
-			.sidenav {
-			  height: 100%; /* 100% Full-height */
-			  width: 0; /* 0 width - change this with JavaScript */
-			  position: fixed; /* Stay in place */
-			  z-index: 1; /* Stay on top */
-			  top: 0; /* Stay at the top */
-			  left: 0;
-			  background-color: #111; /* Black*/
-			  overflow-x: hidden; /* Disable horizontal scroll */
-			  padding-top: 60px; /* Place content 60px from the top */
-			  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-			}
-
-			/* The navigation menu links */
-			.sidenav a {
-			  padding: 8px 8px 8px 32px;
-			  text-decoration: none;
-			  font-size: 25px;
-			  color: #818181;
-			  display: block;
-			  transition: 0.3s;
-			}
-
-			/* When you mouse over the navigation links, change their color */
-			.sidenav a:hover {
-			  color: #f1f1f1;
-			}
-
-			/* Position and style the close button (top right corner) */
-			.sidenav .closebtn {
-			  position: absolute;
-			  top: 0;
-			  right: 25px;
-			  font-size: 36px;
-			  margin-left: 50px;
-			}
-
-			/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-			#main {
-			  transition: margin-left .5s;
-			  padding: 20px;
-			}
-
-			/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-			@media screen and (max-height: 450px) {
-			  .sidenav {padding-top: 15px;}
-			  .sidenav a {font-size: 18px;}
-			}
-
-			.button {
-			  background-color: #4CAF50; /* Green */
-			  border: none;
-			  color: white;
-			  padding: 20px;
-			  text-align: center;
-			  text-decoration: none;
-			  display: inline-block;
-			  font-size: 16px;
-			  margin: 4px 2px;
-			  cursor: pointer;
-			}
-			.button1{
-				border-radius: 12px;
-				color: black;
-				border: 2px solid #000000;
-			}
-
-    	</style>
-
-        <title>My Calendar</title>
-
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-        
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        
-        <!-- Popper JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-        
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet"/>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js" ></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js" type="text/javascript" ></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-        <meta charset="utf-8">
-
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <script src="../js/util.js"></script>
-        <script src="../js/user/events.js"></script>
-        <script src="../js/user/projects.js"></script>
-        <script src="../js/calendar.js"></script>
-        <script src="../js/user/user.js"></script>
-        <link rel="stylesheet" href="../css/event.css">
-    </head>
-    <body onload="clock(); displayDate()" style="background-color: #ADD8E6">
-        <div class="containter">
-            <p>Welcome to your smartcal homepage.</p>
-
-            <div class="modal" tabindex="-1" role="dialog" id="loading">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    
-            <!--Create Event button-->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createEventModal" id="createEvent">
-                Create Event
-            </button>
-    
-            <!--Create Project-->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createProjectModal" id="createProject">
-                Create Project
-            </button>
-            
-            <!--Event Creation Modal-->
-            <div class="modal fade" id="createEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Create Event</h5>
-                        </div>
-    
-                        <!--Create Event Form-->
-                        <div class="modal-body">
-                            <!--Title-->
-                            <div class="form-group">
-                                <input type="text" class="form-control entry" id="e_title" placeholder="Event Title">
-                            </div>
-    
-                            <!--Time-->
-                            <div class="row">
-                                <div class='col-sm-6'>
-                                    <div class="form-group">
-                                        <label for="e_start_time">Start Time</label>
-                                        <div class='input-group date' id='datetimepicker1'>
-                                            <input id="est" type='text' class="form-control entry" id="e_start_time"/>
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-time"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <script type="text/javascript">
-                                    $(function () {
-                                        $('#datetimepicker1').datetimepicker({
-                                            format: 'LT'
-                                        });
-                                    });
-                                </script>
-                                <div class='col-sm-6'>
-                                    <div class="form-group">
-                                        <label for="e_end_time">End Time</label>
-                                        <div class='input-group date' id='datetimepicker2'>
-                                            <input id="eet" type='text' class="form-control entry" id="e_end_time"/>
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-time"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <script type="text/javascript">
-                                    $(function () {
-                                        $('#datetimepicker2').datetimepicker({
-                                            format: 'LT'
-                                        });
-                                    });
-                                </script>
-                            </div>
-    
-                            <!--Recurring-->
-                            <div class="form-check">
-                                <div class="row">
-                                    <div class="col col-sm-4">
-                                        <label for="recurring"> Recurring Event </label>
-                                    </div>
-                                    <div class="col col-sm-1">
-                                        <input class="form-check-input entry" type="checkbox" value="" id="recurring">
-                                    </div>
-                                </div>
-                            </div>
-    
-                            <!--Date Input-->
-                            <div class="row">
-                                <div class='col-md-6'>
-                                    <div class="form-group">
-                                        <label for="e_start_date">Start Date</label>
-                                        <div class='input-group date' id='e_start_date'>
-                                            <input id="esd" type='text' class="form-control entry" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class='col-md-6'>
-                                    <div class="form-group">
-                                        <label for="e_end_date">End Date</label>
-                                        <div class='input-group date' id='e_end_date'>
-                                            <input disabled id="ed" type='text' class="form-control entry" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <script type="text/javascript">
-                                    document.getElementById('recurring').onchange = function() {
-                                        document.getElementById('ed').disabled = !this.checked;
-                                    };
-                                </script>
-                                <script type="text/javascript">
-                                    $(function () {
-                                        $('#e_start_date').datetimepicker({
-                                            format: "MM/DD/YYYY"
-                                        });
-                                        $('#e_end_date').datetimepicker({
-                                            format: "MM/DD/YYYY",
-                                            useCurrent: false //Important! See issue #1075
-                                        });
-                                        $("#e_start_date").on("dp.change", function (e) {
-                                            $('#e_end_date').data("DateTimePicker").minDate(e.date);
-                                        });
-                                        $("#e_end_date").on("dp.change", function (e) {
-                                            $('#e_start_date').data("DateTimePicker").maxDate(e.date);
-                                        });
-                                    });
-                                </script>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col">
-                                    <label for="rec">Recurrence</label>
-                                    <select disabled class="custom-select mr-sm-2" id="rec">
-                                        <option selected>Choose...</option>
-                                        <option value="1">Every</option>
-                                        <option value="2">Every Other</option>
-                                    </select>
-                                </div>
-                                <div class="col">
-                                    <label class="mr-sm-2" for="timeframe">Timeframe</label>
-                                    <select disabled class="custom-select mr-sm-2 my-1" id="timeframe">
-                                        <option selected>Choose...</option>
-                                        <option value="1">Day</option>
-                                        <option value="2">Week</option>
-                                        <option value="3">Month</option>
-                                        <option value="4">Year</option>
-                                    </select>
-                                </div>
-                                <script>
-                                    document.getElementById('recurring').onchange = function() {
-                                        document.getElementById('rec').disabled = !this.checked;
-                                        document.getElementById('timeframe').disabled = !this.checked;
-                                        document.getElementById('ed').disabled = !this.checked;
-                                    };
-                                </script>
-                            </div>
-                            <br>
-                            
-                            <!--Description-->
-                            <div class="form-group">
-                                <label for="e_desc">Event Description</label>
-                                <textarea class="form-control entry" id="e_desc" rows="3"></textarea>
-                            </div>
-                        </div>
-    
-                        <!--Cancel and submit buttons-->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearAllEntries()">Cancel</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="createCalendarEvent()">Create Event</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Project Creation Modal-->
-            <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Create Project</h5>
-                        </div>
-    
-                        <!--Create Project Form-->
-                        <div class="modal-body">
-                            <!--Title-->
-                            <div class="form-group">
-                                <input type="text" class="form-control entry" id="p_title" placeholder="Project Title">
-                            </div>
-    
-                            <!--Time-->
-                            <div class="row">
-                                <div class='col-sm-6'>
-                                    <div class="form-group">
-                                        <label for="p_start_time">Start Date</label>
-                                        <div class='input-group date' id='datetimepickerPS'>
-                                            <input id="pst" type='text' class="form-control entry" id="p_start_time"/>
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-time"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <script type="text/javascript">
-                                    $(function () {
-                                        $('#datetimepickerPS').datetimepicker({
-                                            format: "MM/DD/YYYY"
-                                        });
-                                    });
-                                </script>
-                                <div class='col-sm-6'>
-                                    <div class="form-group">
-                                        <label for="p_end_time">Due Date</label>
-                                        <div class='input-group date' id='datetimepickerPE'>
-                                            <input id="pet" type='text' class="form-control entry" id="p_end_time"/>
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-time"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <script type="text/javascript">
-                                    $(function () {
-                                        $('#datetimepickerPE').datetimepicker({
-                                            format: "MM/DD/YYYY"
-                                        });
-                                    });
-                                </script>
-                            </div>
-    
-                            <!--Time Input-->
-                            <div class="row">
-                                <div class='col'>
-                                    <h4>Expected amount of time to finish:</h4>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class='col-md-6'>
-                                    <div class="form-group">
-                                    <label for="p_hours">Hours</label>
-                                        <input id="p_hours" type='number' class="form-control entry" />
-                                    </div>
-                                </div>
-                                <div class='col-md-6'>
-                                    <div class="form-group">
-                                    <label for="p_min">Minutes</label>
-                                        <input id="p_min" type='number' class="form-control entry" />
-                                    </div>
-                                </div>
-                                <script type="text/javascript">
-                                    document.getElementById('p_hours').onchange = function() {
-                                        this.value = Math.max(0, parseInt(this.value));
-                                    }
-
-                                    document.getElementById('p_min').onchange = function() {
-                                        this.value = Math.max(0, Math.min(59, parseInt(this.value)));
-                                    }
-                                </script>
-                            </div>
-                            
-                            <!--Description-->
-                            <div class="form-group">
-                                <label for="p_desc">Project Description</label>
-                                <textarea class="form-control entry" id="p_desc" rows="3"></textarea>
-                            </div>
-                        </div>
-    
-                        <!--Cancel and submit buttons-->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearAllEntries()">Cancel</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="createCalendarProject()">Create Project</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    
-            <!--Event Creation Fail Modal-->
-            <div id="eventCreationFail" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Failed to create event</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>One or more of the required entries for event creation was incomplete.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Project Creation Fail Modal-->
-            <div id="projectCreationFail" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Failed to create project</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>One or more of the required entries for project creation was incomplete.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script type="text/javascript">
-            var user = new User();
-            getAllEvents();
-            getAllProjects();
-            console.log(user);
-        </script>
-        <div class = "container">
-            <div id="mySidenav" class="sidenav">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                
-                First name: <input type="text" name="fname"><br>
-                Last name: <input type="text" name="lname"><br>
-                <input type="submit" value="Submit">
-              </div>
-      
-              <!-- Use any element to open the sidenav -->
-              <div id="title" class="w3-container">
-                  <button class="button1" onclick="openNav()">☰ open</button>
-      
-                  <h1 style="text-align: center">Welcome to your smartcal homepage.</h1>
-      
-                  <h2 id="date" style="text-align: center"></h2>
-              </div>
-      
-              <div class="w3-container">
-                  <table id="schedule" class="table">
-                    <tr>
-                        <th></th>
-                        <th style="width:14.28%" id="Sunday"></th>
-                      <th style="width:14.28%" id="Monday"></th>
-                      <th style="width:14.28%" id="Tuesday"></th>
-                      <th style="width:14.28%" id="Wednesday"></th>
-                      <th style="width:14.28%" id="Thursday"></th>
-                      <th style="width:14.28%" id="Friday"></th>
-                      <th style="width:14.28%" id="Saturday"></th>
-                    </tr>
-                    <tr>
-                      <td>8:00am</td>
-                      <td style="height:50px"></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>9:00am</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>10:00am</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>11:00am</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>12:00pm</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>1:00pm</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>2:00pm</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>3:00pm</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>4:00pm</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>5:00pm</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>6:00pm</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>7:00pm</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>8:00pm</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>9:00pm</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>10:00pm</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>11:00pm</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>12:00pm</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  </table>
-              </div>
-        </div>
-    </body>
+	   		</div>
+	   		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+	   			<table id="schedule" class="table table-bordered">
+	   				<colgroup>
+						<col width="5%">
+						<col width="13.5%">
+						<col width="13.5%">
+						<col width="13.5%">
+						<col width="13.5%">
+						<col width="13.5%">
+						<col width="13.5%">
+						<col width="13.5%">
+					</colgroup>
+	   				<thead>
+	   					
+	   					<tr valign="center">
+	   						<th>Time</th>
+		                    <th id="Sun"></th>
+		                    <th id="Mon"></th>
+		                    <th id="Tues"></th>
+		                    <th id="Wedn"></th>
+		                    <th id="Thurs"></th>
+		                    <th id="Fri"></th>
+		                    <th id="Sat"></th>
+	   					</tr>
+	   				</thead>
+	   				<tbody>
+	   					<tr>
+		                    <td rowspan="4">8:00am</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">9:00am</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">10:00am</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">11:00am</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">12:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">1:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">2:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">3:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">4:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">5:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">6:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">7:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">8:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">9:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+	   				</tbody>
+	   			</table>
+	   		</div>
+	   	</div>
+	</body>
+	<script src="../js/calendar.js"></script>
 </html>

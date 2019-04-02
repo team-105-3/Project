@@ -1,0 +1,44 @@
+#month_header{
+	background-color:black;
+	padding: 0px;
+}
+
+#date{
+	color:white;
+	font-family: "Tangerine", serif;
+	font-weight: bold;
+	font-size: 100px;
+}
+
+#sch_cal{
+	padding-left:15px;
+	padding-right:15px;
+}
+
+div[class="navbar-header"]{
+	font-size:30px;
+	cursor:pointer; 
+	padding-top:5px;
+	padding-left:0px; 
+	padding-right:10px;
+}
+
+td,tr,th{
+	padding:0px;
+	height:0px;
+	text-align:center;
+}
+
+.previous {
+	background-color: #f1f1f1;
+	color: black;
+}
+
+.next {
+	background-color: #4CAF50;
+	color: white;
+}
+
+.round {
+  	border-radius: 50%;
+}

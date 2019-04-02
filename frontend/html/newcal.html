@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Calendar</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -14,7 +14,7 @@
 
       table, td, th{
          border: 1px solid black;
-         height: 0.1px;
+         height: 0.01px;
       }
 
        /* Remove the navbar's default margin-bottom and rounded borders */ 
@@ -48,6 +48,12 @@
          }
          .row.content {height:auto;} 
       }
+
+      .jumbotron{
+      background-image: url('snow.jpeg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      } 
    </style>
 </head>
 <body onload="clock(); displayDate()">
@@ -76,15 +82,20 @@
      </div>
    </nav>
      
-   <div class="container-fluid text-center">    
+   <div class="container-fluid text-center">
       <div class="row content">
-
-         <div class="col-sm-2 sidenav" style="width: 150px">
+         <div class="col-sm-2 sidenav">
             
          </div>
 
          <div class="col-sm-8 text-left"> 
-            <h2 id="date" style="text-align: center"></h2>
+
+            <div class="container">
+               <div class="jumbotron" background-color: #7CFC00>
+                  <h2 id="date" style="text-align: center" ></h2>
+               </div>
+            </div>
+
             <div class="w3-container">
                <table id="schedule" class="table">
                   <tr>

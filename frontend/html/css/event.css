@@ -1,0 +1,10 @@
+.event {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: deepskyblue;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    color: white;
+}
