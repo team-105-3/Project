@@ -20,7 +20,7 @@
 		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 	</head>
-	<body onload="clock(); displayDate(0)">
+	<body onload="clock(); displayDate()">
 		<div id="month_header" class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<header class="masthead container-fluid">
@@ -29,73 +29,122 @@
 				  	</div>
 				</header>
 			</div>
-		</div>
+        </div>
 
+        
 		<div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<nav class="navbar navbar-inverse">
-					<div class="container-fluid">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <nav class="navbar navbar-inverse">
+                        <div class="container-fluid">
+    
+                            <div class="navbar-header">
+                                  <span style="color:white; font-size:15px;">Username</span>
+                            </div>
+    
+                            <ul class="nav navbar-nav">
+                                <button class="btn active" id="nav_bnt">Week</button>
+                                <button class="btn" id="nav_bnt">Month</button>
+                                <button class="btn" id="nav_bnt">Year</button>
+                            </ul>
+    
+                            <ul class="nav navbar-nav navbar-right">
+                                  <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> LogOut</a></li>
+                            </ul>
+    
+                        </div>
+                    </nav>
+                </div>
+        </div>
+    
+        <div class="row">
+                <button class="btn btn-primary" type="button" onclick="displayDate(-1)">Previous</button>
+                <button class="btn btn-primary" type="button" onclick="displayDate(1)">Next</button>
+        </div>
 
-					    <div class="navbar-header">
-					      	<span style="color:white; font-size:15px;">Username</span>
-					    </div>
-
-						<ul class="nav navbar-nav">
-						    <button class="btn active" id="nav_bnt">Week</button>
-						    <button class="btn" id="nav_bnt">Month</button>
-						    <button class="btn" id="nav_bnt">Year</button>
-						</ul>
-
-						<ul class="nav navbar-nav navbar-right">
-					      	<li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> LogOut</a></li>
-					    </ul>
-
-					</div>
-				</nav>
-			</div>
-	   	</div>
-
-	   	<div class="row">
-				<button class="btn btn-primary" type="button" onclick="displayDate(-1)">Previous</button>
-				<button class="btn btn-primary" type="button" onclick="displayDate(1)">Next</button>
-		</div>
-
+    
 	   	<div id="sch_cal" class="row">
-	   		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="background-color: gray;">
-	   			<center><h6>Start time</h6></center>
-	   			<input type="text" class="form-control" id="stime" placeholder="8:00">
-	   			<input id="toggle-one" checked type="checkbox">
-				<script>
-				  	$(function() {
-				    	$('#toggle-one').bootstrapToggle({
-					      on: 'AM',
-					      off: 'PM'
-					    });
-				  	})
-				</script>
 
-	   			<br>
-	   			<input type="text" class="form-control" id="etime" placeholder="9:00">
-	   			<input id="toggle-two" type="checkbox">
-				<script>
-				  	$(function() {
-				    	$('#toggle-two').bootstrapToggle({
-					      on: 'AM',
-					      off: 'PM'
-					    });
-				  	})
-				</script>
+            
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" >
+                <br> </br>
 
-	   			<br>
-	   			<center><h6>Add</h6></center>
-	   			<input type="text" class="form-control" id="todo" placeholder="To Do">
-	   			<input type="text" class="form-control" id="hlong" placeholder="How Long (hr)">
-	   			<center><h6>Remove</h6></center>
-	   			<input type="text" class="form-control" id="remove" placeholder="Things to delete">
-	   			<br>
+                <!-- displaying pills -->
+                <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <nav class="navbar navbar-inverse">
+                                <div class="container-fluid">
+            
+                                    <!--
+                                    <div class="navbar-header">
+                                        <span style="color:white; font-size:15px;">Username</span>
+                                    </div>
+                                    -->
+            
+                                    <ul class="nav nav-pills">
+                                        <li class="active"><a data-toggle="pill" href="#customize-times">Customize Times</a></li>
+                                        <li><a data-toggle="pill" href="#add-toggle">Add Event</a></li>
+                                        <li><a data-toggle="pill" href="#remove-toggle">Remove Event</a></li>
+                                    </ul>
+            
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                    <!-- this is where toggle pills ends-->
 
 
-	   		</div>
+
+
+                <!-- making toggle pills --> 
+
+                <div id="customize-times" class="tab-pane fade" style="background-color: gray;">
+                        <center><h6>Start time</h6></center>
+                        <input type="text" class="form-control" id="stime" placeholder="8:00">
+                        <input id="toggle-one" checked type="checkbox">
+                    <script>
+                        $(function() {
+                            $('#toggle-one').bootstrapToggle({
+                            on: 'AM',
+                            off: 'PM'
+                            });
+                        })
+                    </script>
+
+                        <br>
+                        <input type="text" class="form-control" id="etime" placeholder="9:00">
+                        <input id="toggle-two" type="checkbox">
+                    <script>
+                        $(function() {
+                            $('#toggle-two').bootstrapToggle({
+                            on: 'AM',
+                            off: 'PM'
+                            });
+                        })
+                    </script>
+                </div>
+
+                <div id="add-toggle" class="tab-pane fade" style="background-color: gray;">
+                    <br>
+                    <center><h6>Add</h6></center>
+                    <input type="text" class="form-control" id="todo" placeholder="To Do">
+                    <input type="text" class="form-control" id="hlong" placeholder="How Long (hr)">
+                    <br>
+                </div>
+
+                <div id="remove-toggle" class="tab-pane fade" style="background-color: gray;">
+                    <br>
+                    <center><h6>Remove</h6></center>
+                    <input type="text" class="form-control" id="remove" placeholder="Things to delete">
+                    <br>
+                </div>
+
+                <!-- end making toggle pills -->
+
+
+
+            </div>
+            
+
 	   		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
 	   			<table id="schedule" class="table table-bordered">
 	   				<colgroup>
