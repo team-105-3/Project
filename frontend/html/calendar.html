@@ -20,7 +20,7 @@
 		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 	</head>
-	<body onload="clock(); displayDate()">
+	<body onload="clock(); displayDate(0)">
 		<div id="month_header" class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<header class="masthead container-fluid">
@@ -41,9 +41,9 @@
 					    </div>
 
 						<ul class="nav navbar-nav">
-						    <li class="active"><a href="#">Week</a></li>
-						    <li><a href="#">Month</a></li>
-						    <li><a href="#">Year</a></li>
+						    <button class="btn active" id="nav_bnt">Week</button>
+						    <button class="btn" id="nav_bnt">Month</button>
+						    <button class="btn" id="nav_bnt">Year</button>
 						</ul>
 
 						<ul class="nav navbar-nav navbar-right">
@@ -55,8 +55,10 @@
 			</div>
 	   	</div>
 
-	   	<a href="#" class="previous round">&#8249;</a>
-		<a href class="next round">&#8250;</a>
+	   	<div class="row">
+				<button class="btn btn-primary" type="button" onclick="displayDate(-1)">Previous</button>
+				<button class="btn btn-primary" type="button" onclick="displayDate(1)">Next</button>
+		</div>
 
 	   	<div id="sch_cal" class="row">
 	   		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="background-color: gray;">
