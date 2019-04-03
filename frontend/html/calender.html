@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Scheduler</title>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+		<!-- used to link with css -->
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+
+		<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+	</head>
+	<body onload="clock(); displayDate()">
+		<div id="month_header" class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<header class="masthead container-fluid">
+				  	<div class="container">
+				    	<center><p id="date">Month Year</p></center>  
+				  	</div>
+				</header>
+			</div>
+        </div>
+        
+
+        <!-- making toggle pills 
+
+        <div id="customize-times" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tab-pane fade" style="background-color: gray;">
+                <center><h6>Start time</h6></center>
+                <input type="text" class="form-control" id="stime" placeholder="8:00">
+                <input id="toggle-one" checked type="checkbox">
+             <script>
+                   $(function() {
+                     $('#toggle-one').bootstrapToggle({
+                       on: 'AM',
+                       off: 'PM'
+                     });
+                   })
+             </script>
+
+                <br>
+                <input type="text" class="form-control" id="etime" placeholder="9:00">
+                <input id="toggle-two" type="checkbox">
+             <script>
+                   $(function() {
+                     $('#toggle-two').bootstrapToggle({
+                       on: 'AM',
+                       off: 'PM'
+                     });
+                   })
+             </script>
+        </div>
+
+        <div id="add-toggle" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tab-pane fade" style="background-color: gray;">
+            <br>
+            <center><h6>Add</h6></center>
+            <input type="text" class="form-control" id="todo" placeholder="To Do">
+            <input type="text" class="form-control" id="hlong" placeholder="How Long (hr)">
+            <br>
+        </div>
+
+        <div id="remove-toggle" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tab-pane fade" style="background-color: gray;">
+            <br>
+            <center><h6>Remove</h6></center>
+            <input type="text" class="form-control" id="remove" placeholder="Things to delete">
+            <br>
+        </div>
+
+        end making toggle pills -->
+
+        <!-- displaying pills -->
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<nav class="navbar navbar-inverse">
+					<div class="container-fluid">
+
+                        <!--
+					    <div class="navbar-header">
+					      	<span style="color:white; font-size:15px;">Username</span>
+                        </div>
+                        -->
+
+                        <ul class="nav nav-pills">
+                            <li><a data-toggle="pill" href="#"><span style="color:white; font-size:15px;">Username</span></a></li>
+						    <li class="active"><a data-toggle="pill" href="#customize-times">Customize Times</a></li>
+                            <li><a data-toggle="pill" href="#add-toggle">Add Event</a></li>
+                            <li><a data-toggle="pill" href="#remove-toggle">Remove Event</a></li>
+						</ul>
+
+						<ul class="nav navbar-nav navbar-right">
+					      	<li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> LogOut</a></li>
+					    </ul>
+
+					</div>
+				</nav>
+			</div>
+	   	</div>
+
+        <!-- this is where toggle pills ends-->
+
+	   	<a href="#" class="previous round">&#8249;</a>
+		<a href class="next round">&#8250;</a>
+
+	   	<div id="sch_cal" class="row">
+
+            
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" >
+                <!--
+
+	   			<center><h6>Start time</h6></center>
+	   			<input type="text" class="form-control" id="stime" placeholder="8:00">
+	   			<input id="toggle-one" checked type="checkbox">
+				<script>
+				  	$(function() {
+				    	$('#toggle-one').bootstrapToggle({
+					      on: 'AM',
+					      off: 'PM'
+					    });
+				  	})
+				</script>
+
+	   			<br>
+	   			<input type="text" class="form-control" id="etime" placeholder="9:00">
+	   			<input id="toggle-two" type="checkbox">
+				<script>
+				  	$(function() {
+				    	$('#toggle-two').bootstrapToggle({
+					      on: 'AM',
+					      off: 'PM'
+					    });
+				  	})
+				</script>
+
+                
+	   			<br>
+	   			<center><h6>Add</h6></center>
+	   			<input type="text" class="form-control" id="todo" placeholder="To Do">
+	   			<input type="text" class="form-control" id="hlong" placeholder="How Long (hr)">
+	   			<center><h6>Remove</h6></center>
+	   			<input type="text" class="form-control" id="remove" placeholder="Things to delete">
+                <br>
+                -->
+
+                <!-- making toggle pills --> 
+
+                <div id="customize-times" class="tab-pane fade" style="background-color: gray;">
+                        <center><h6>Start time</h6></center>
+                        <input type="text" class="form-control" id="stime" placeholder="8:00">
+                        <input id="toggle-one" checked type="checkbox">
+                    <script>
+                        $(function() {
+                            $('#toggle-one').bootstrapToggle({
+                            on: 'AM',
+                            off: 'PM'
+                            });
+                        })
+                    </script>
+
+                        <br>
+                        <input type="text" class="form-control" id="etime" placeholder="9:00">
+                        <input id="toggle-two" type="checkbox">
+                    <script>
+                        $(function() {
+                            $('#toggle-two').bootstrapToggle({
+                            on: 'AM',
+                            off: 'PM'
+                            });
+                        })
+                    </script>
+                </div>
+
+                <div id="add-toggle" class="tab-pane fade" style="background-color: gray;">
+                    <br>
+                    <center><h6>Add</h6></center>
+                    <input type="text" class="form-control" id="todo" placeholder="To Do">
+                    <input type="text" class="form-control" id="hlong" placeholder="How Long (hr)">
+                    <br>
+                </div>
+
+                <div id="remove-toggle" class="tab-pane fade" style="background-color: gray;">
+                    <br>
+                    <center><h6>Remove</h6></center>
+                    <input type="text" class="form-control" id="remove" placeholder="Things to delete">
+                    <br>
+                </div>
+
+                <!-- end making toggle pills -->
+
+
+
+            </div>
+            
+
+	   		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+	   			<table id="schedule" class="table table-bordered">
+	   				<colgroup>
+						<col width="5%">
+						<col width="13.5%">
+						<col width="13.5%">
+						<col width="13.5%">
+						<col width="13.5%">
+						<col width="13.5%">
+						<col width="13.5%">
+						<col width="13.5%">
+					</colgroup>
+	   				<thead>
+	   					
+	   					<tr valign="center">
+	   						<th>Time</th>
+		                    <th id="Sun"></th>
+		                    <th id="Mon"></th>
+		                    <th id="Tues"></th>
+		                    <th id="Wedn"></th>
+		                    <th id="Thurs"></th>
+		                    <th id="Fri"></th>
+		                    <th id="Sat"></th>
+	   					</tr>
+	   				</thead>
+	   				<tbody>
+	   					<tr>
+		                    <td rowspan="4">8:00am</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">9:00am</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">10:00am</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">11:00am</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">12:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">1:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">2:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">3:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">4:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">5:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">6:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">7:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">8:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="4">9:00pm</td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+		                <tr>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                </tr>
+	   				</tbody>
+	   			</table>
+	   		</div>
+	   	</div>
+	</body>
+	<script src="../js/calendar.js"></script>
+</html>
