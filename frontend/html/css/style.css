@@ -15,10 +15,15 @@
 	padding-right:15px;
 }
 
+#nav_bnt{
+	color:white;
+	padding-top:15px;
+	background-color: #222;
+}
+
 div[class="navbar-header"]{
 	font-size:30px;
 	cursor:pointer; 
-	padding-top:5px;
 	padding-left:0px; 
 	padding-right:10px;
 }
@@ -27,18 +32,4 @@ td,tr,th{
 	padding:0px;
 	height:0px;
 	text-align:center;
-}
-
-.previous {
-	background-color: #f1f1f1;
-	color: black;
-}
-
-.next {
-	background-color: #4CAF50;
-	color: white;
-}
-
-.round {
-  	border-radius: 50%;
 }
