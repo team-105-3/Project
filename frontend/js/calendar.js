@@ -1,8 +1,10 @@
 var date = new Date().getDate();
+console.log(date);
 var week = new Date().getDay();
 var month = new Date().getMonth();
 var year = new Date().getFullYear();
 var currentDate = date;
+console.log("currentDate = " + currentDate)
 
 var weekarr= ["Sun", "Mon", "Tues", "Wedn", "Thurs", "Fri", "Sat"];
 var monthArr = ["January", "February","March", "April", "May", "June", "July", "August", "September", "October", "November","December"];
@@ -60,7 +62,6 @@ function fixweek(date,month){
 function createweek()
 {
     console.log(currentDate);
-    console.log(week);
     switch(week) {
         case 0: <!-- Sunday -->
             var i = 0;
@@ -156,12 +157,12 @@ function createweek()
         // code block
     }
 }
+
 function displayDate(number)
 {
     currentDate = currentDate+ (number*7);
-    
-    //console.log(currentDate);
-    //console.log(number);
+    console.log(date);
+    console.log("currentDate = " + currentDate)
 
     createweek();
     
