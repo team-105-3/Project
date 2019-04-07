@@ -120,6 +120,76 @@ User.prototype.decDate = function() {
 User.prototype.incDate = function() {
     this.currentUserDate.setDate(this.currentUserDate.getDate() + 7);
 }
+
+User.prototype.isProjectOnDay = function(date, project) {
+    var s_parts = event.startDate.split('/');
+    var currentDate = new Date(parseInt(s_parts[2]), parseInt(s_parts[0]-1), parseInt(s_parts[1]));
+
+    if(!project.recurring) {
+        return datesEqual(currentDate, date);
+    }
+
+    var p_parts = project.endDate.split('/');
+    var projectEndDate = new Date(parseInt(e_parts[2]), parseInt(e_parts[0] - 1), parseInt(e_parts[1]));
+
+    var multiplier = project.recurrency;
+
+    while(projectEndDate > currentDate && date > currentDate) {
+        if(datesEqual(currentDate, date)) {
+            return true;
+        } else {
+            if(project.timeframe == 1) {
+                currentDate.setDate(currentDate.getDate() + 1 * multiplier);
+            } else if (project.timeframe == 2) {
+                currentDate.setDate(currentDate.getDate() + 14 * multiplier);
+            } else if (project.timeframe == 3) {
+                currentDate.setMonth(currentDate.getMonth() + 1 * multiplier);
+            } else if (project.timeframe == 4) {
+                currentDate.setFullYear(currentDate.getFullYear() + 1 * multiplier);
+            }
+        }
+    }
+
+    return false;
+}
+
+
+/**
+ * Returns all of a users events on a given day
+ */
+User.prototype.getAllProjectsOnDay = function(date) {
+    var dailyProjects = [];
+
+    this.projects.forEach(project => {
+        if(this.isEventOnDay(date, project)) {
+            dailyProjects.push(project);
+        }
+    });
+
+    return dailyProjects;
+}
+
+/**
+ * Returns all of a users events for a given week based on given day
+ */
+User.prototype.getAllProjectsForWeek = function(date) {
+    var dateCopy = new Date(date);
+    var firstDay = new Date(dateCopy.setDate(dateCopy.getDate() - dateCopy.getDay()));
+
+    var currentDate = new Date(firstDay);
+
+    var weeklyProjects = [];
+
+    for(var i = 0; i < 7; i++) {
+        var dailyProjects = [];
+        currentDate.setDate(currentDate.getDate() + Math.min(i, 1));
+        dailyProjects = this.getAllEventsOnDay(currentDate);
+        weeklyProjects.push(dailyProjects);
+    }
+
+    return weeklyProjects;
+}
+
 /**
  * Requests all of a users events from the server and loads them into the user class object
  */
