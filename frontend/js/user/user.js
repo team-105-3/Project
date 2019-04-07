@@ -113,10 +113,17 @@ User.prototype.addProject = function(project) {
     this.projects.push(project);
 }
 
+User.prototype.decDate = function() {
+    this.currentUserDate.setDate(this.currentUserDate.getDate() - 7);
+}
+
+User.prototype.incDate = function() {
+    this.currentUserDate.setDate(this.currentUserDate.getDate() + 7);
+}
 /**
  * Requests all of a users events from the server and loads them into the user class object
  */
-function getAllEvents() {
+function getAllEvents(callback) {
     let loadEventsRequest = new XMLHttpRequest();
     let url = connectUrl + "/getEvents/";
     loadEventsRequest.open('POST', url);
@@ -138,6 +145,7 @@ function getAllEvents() {
                 user.addEvent(event);
             });
         }
+        callback();
     }
     loadEventsRequest.send(JSON.stringify({"key": new URL(window.location.href).searchParams.get('key')}));
     //$('#loading').modal('show');
@@ -146,7 +154,7 @@ function getAllEvents() {
 /**
  * Requests all of a users projects from the server and loads them into the user class object
  */
-function getAllProjects() {
+function getAllProjects(callback) {
     let projRequest = new XMLHttpRequest();
     let url = connectUrl + "/getProjects/";
     projRequest.open('POST', url);
@@ -166,6 +174,7 @@ function getAllProjects() {
                 user.addProject(project);
             });
         }
+        callback();
     }
     projRequest.send(JSON.stringify({"key": new URL(window.location.href).searchParams.get('key')}));
     //$('#loading').modal('show');

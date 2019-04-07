@@ -49,50 +49,44 @@
         <link rel="stylesheet" href="../css/event.css">
         <link rel="stylesheet" href="../css/calendar.css">
     </head>
-    <body onload="clock(); displayDate()">
+    <body>
         <div class="containter">
             <div class="wrapper">
-                <nav id="sidebar">
-                    <div class="sidebar-header">
-                        <h3>Header</h3>
-                    </div>
-                    <ul class="list-unstyled components">
-                        <p>Heading</p>
-                        <li class="active">
-                            <div class="aaa btn" data-toggle="modal" data-target="#createEventModal" id="createEvent">
-                                Create Event
-                            </div>
-                        </li>
-                        <li>
-                            <div class="aaa btn" data-toggle="modal" data-target="#createProjectModal" id="createProject">
-                                Create Project
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
                 <div id="content">
                     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                         <ul class="navbar-nav mr-auto">
-                            <button type="button" id="sidebarCollapse" class="tgl">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
                             <li class='nav-item'>
-                                <a class="navbar-brand" href="#">&lt;</a>
+                                <a class="navbar-brand" href="#" onclick="decUserDate()">&lt;</a>
                             </li>
                             <li class="nav-item">
-                                <p class="navbar-brand"> Today's Date </p>
+                                <p class="navbar-brand" id="todays-date"> Today's Date </p>
+                            </li>
+                            <li class='nav-item'>
+                                <a class="navbar-brand" href="#" onclick="incUserDate()">&gt;</a>
                             </li>
                         </ul>
+                        <form class="form-inline my-2 my-lg-0">
+                            <div class="c-btn" onclick="" data-toggle="modal" data-target="#createEventModal" id="createEvent">
+                                <a>New Event</a>
+                            </div>
+                            <div class="c-btn" data-toggle="modal" data-target="#createProjectModal" id="createProject">
+                                <a>New Project</a>
+                            </div>
+                        </form>
                     </nav>
+                    <div class="calendar">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr id="days-of-week"></tr>
+                            </thead>
+                            <tbody id="weekly-calendar">
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <script>
-                $(document).ready(function () {
-                    $('#sidebarCollapse').on('click', function () {
-                        $('#sidebar').toggleClass('active');
-                    });
-                });
-            </script>
+
 
             <div class="modal" tabindex="-1" role="dialog" id="loading">
                 <div class="modal-dialog" role="document">
@@ -203,7 +197,7 @@
                                 <script type="text/javascript">
                                     $(function () {
                                         $('#e_start_date').datetimepicker({
-                                            format: "MM/DD/YYYY"
+                                            format: "MM/DD/YYYY",
                                         });
                                         $('#e_end_date').datetimepicker({
                                             format: "MM/DD/YYYY",
@@ -406,10 +400,20 @@
             </div>
         </div>
         <script type="text/javascript">
+            function updateUI() {
+                user.update(); 
+                displayDate(user);
+                clearAllEventsAndProjects();
+                displayUsersEvents(user);
+                console.log(user);
+            }
+
             var user = new User();
-            getAllEvents();
-            getAllProjects();
-            console.log(user);
+            getAllEvents(updateUI);
+            getAllProjects(updateUI);
+            createCalendarTable();
+            function incUserDate() { user.incDate(); updateUI(); }
+            function decUserDate() { user.decDate(); updateUI(); }
         </script>
     </body>
 </html>

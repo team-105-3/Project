@@ -154,108 +154,83 @@ function clock() {
     document.getElementById("date").innerHTML=month+" "+year;
 }
 
-function displayDate() {
-    var currentDate = new Date().getDate();
-    var month = new Date().getMonth() + 1;
-    var dayOfWeek = new Date().getDay()+1;
-    var weekarr= ["Sun", "Mon", "Tues", "Wedn", "Thurs", "Fri", "Sat"];
-    switch(dayOfWeek) {
-        case 1: //<!-- Sunday -->
-            var i = 0;
-            var trackDay = 0;
-            for(i =0; i < 7; i++) {
-                var day = weekarr[trackDay];
-                var date = currentDate + i;
-                document.getElementById(day).innerHTML= weekarr[trackDay] + " " + month + "/" + date;
-                trackDay += 1;
-            }
+const weekarr = ["Sun&nbsp;", "Mon&nbsp;", "Tues", "Wed&nbsp;", "Thurs", "Fri&nbsp;", "Sat&nbsp;"];
+const montharr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-            break;
-        case 2: //<!-- Monday -->
+function displayDate(user) {
+    var currentDate = user.currentUserDate;
+    var month = currentDate.getMonth();
+    var dayOfWeek = currentDate.getDay();
+    document.getElementById('todays-date').innerHTML = weekarr[dayOfWeek] + ", " + montharr[month] + " " + currentDate.getDate() + ", " + currentDate.getFullYear(); 
+}
 
-            var i = 0;
-            var trackDay = 0;
-            for(i =-1; i < 6; i++) {
-                var day = weekarr[trackDay];
-                var date = currentDate + i;
-                document.getElementById(day).innerHTML= weekarr[trackDay] + " " + month + "/" + date;
-                trackDay += 1;
-            }
-
-
-            break;
-        case 3: //<!-- Tuesday -->
-            // code block
-
-            var i = 0;
-            var trackDay = 0;
-            for(i =-2; i < 5; i++) {
-                var day = weekarr[trackDay];
-                var date = currentDate + i;
-                document.getElementById(day).innerHTML= weekarr[trackDay] + " " + month + "/" + date;
-                trackDay += 1;
-            }
-
-
-
-            break;
-        case 4: //<!-- Wednesday -->
-            // code block
-
-
-            var i = 0;
-            var trackDay = 0;
-            for(i =-3; i < 4; i++) {
-                var day = weekarr[trackDay];
-                var date = currentDate + i;
-                document.getElementById(day).innerHTML= weekarr[trackDay] + " " + month + "/" + date;
-                trackDay += 1;
-            }
-
-            break;
-        case 5: //<!-- Thursday -->
-            // code block
-            var i = 0;
-            var trackDay = 0;
-            for(i =-4; i < 3; i++) {
-                var day = weekarr[trackDay];
-                var date = currentDate + i;
-                document.getElementById(day).innerHTML= weekarr[trackDay] + " " + month + "/" + date;
-                trackDay += 1;
-            }
-
-            break;
-        case 6: //<!-- Friday -->
-            // code block
-
-
-            var i = 0;
-            var trackDay = 0;
-            for(i =-5; i < 2; i++) {
-                var day = weekarr[trackDay];
-                var date = currentDate + i;
-                document.getElementById(day).innerHTML= weekarr[trackDay] + " " + month + "/" + date;
-                trackDay += 1;
-            }
-
-
-
-            break;
-        case 7: //<!-- Saturday -->
-            // code block
-
-
-            var i = 0;
-            var trackDay = 0;
-            for(i =-6; i < 1; i++) {
-                var day = weekarr[trackDay];
-                var date = currentDate + i;
-                document.getElementById(day).innerHTML= weekarr[trackDay] + " " + month + "/" + date;
-                trackDay += 1;
-            }
-
-            break;
-        default:
-        // code block
+function createCalendarTable() {
+    $('#days-of-week').append('<th scope="row">Schedule</th>');
+    for(var i = 0; i < 7; i++) {
+        $('#days-of-week').append('<th style="text-align:center;" scope="col">' + weekarr[i] + '</th>');
+    } 
+    for(var i = 0; i < 24; i++) {
+        var k = ((i==12||i==0)?12:(i%12));
+        var content = '<tr>';
+        content += '<td scope="row">' + ((k<10)?'0':'') + k + ':00' + ((i<12)?'AM':'PM') + '</td>';
+        for(var l = 0; l < 7; l++) {
+            content += '<td scope="col"></td>';
+        }
+        content += '</tr>';
+        $('#weekly-calendar').append(content);
     }
+}
+
+function displayUsersEvents(user) {
+    //get all of a users events for the current week
+    var events = user.currentEvents;
+
+    for(var i = 0; i < 7; i++) {
+        var daysEvents = events[i];
+        daysEvents.forEach(event => {
+            var startTime = standard2Military(event.startTime);
+            var startHour = startTime[0];
+            var startMin = startTime[1];
+
+            var endTime = standard2Military(event.endTime);
+            var endHour = endTime[0];
+            var endMin = endTime[1];
+
+            var totalHours = endHour - startHour;
+
+            var cell = document.getElementById("weekly-calendar").rows[startHour].cells[i+1];
+
+            cell.setAttribute('rowspan', totalHours + 1);
+            cell.style.padding = "0px";
+            cell.style.margin = "0px";
+            var eventDiv = document.createElement('div');
+            eventDiv.className = 'event';
+            eventDiv.style.marginTop = ((startMin / 60) * 100) / 8 + "%";
+
+            var title = document.createTextNode(event.title);
+            eventDiv.appendChild(title);
+            cell.appendChild(eventDiv);
+        });
+    }
+}
+
+function clearAllEventsAndProjects() {
+    $('.event').remove();
+    $('.project').remove();
+}
+
+function standard2Military(str) {
+    var hour = parseInt(str.split(':')[0]);
+    var o = str.split(":")[1].split(" ");
+    var min = parseInt(o[0]);
+    var AMPM = o[1];
+    if(AMPM === 'AM' && hour == 12) {
+        hour = 0;
+    } else if(AMPM == 'PM' && hour == 12) {
+        hour == 12;
+    } else {
+        hour = (AMPM === 'AM' && hour > 12)?hour:hour+12;
+    }
+    return [hour, min];
+    
 }
