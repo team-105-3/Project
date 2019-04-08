@@ -400,12 +400,14 @@
             </div>
         </div>
         <script type="text/javascript">
+            //function to be called everytime user does something that updates UI
             function updateUI() {
-                user.update(); 
-                displayDate(user);
-                clearAllEventsAndProjects();
-                displayUsersEvents(user);
-                console.log(user);
+                user.update(); //update current user projects and events
+                displayDate(user); //display correct date in top left
+                clearAllEventsAndProjects(); //reset calendar
+                displayUsersEvents(user); //display all events in calendar
+                console.log(user); //log user status (for debugging)
+                highlightDate(user); //highlight current date in top bar
             }
 
             var user = new User();

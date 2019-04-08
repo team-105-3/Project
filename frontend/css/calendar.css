@@ -35,16 +35,25 @@
   color: white;
 }
 
+.cal-cell {
+
+}
+
 .event {
-  width: auto;
-  background-color: cornflowerblue;
-  color: black;
-  padding: 0px;
-  margin-left: 0px;
-  margin-right: 0px;
-  align-items: center;
-  align-content: center;
-  min-height: 100%;
+  z-index: 100000;
+  display: inline-flex;
+  height: 100%;
   border-radius: 5px;
-  float: top;
+  width: auto;
+  text-overflow: ellipsis;
+  padding: 5px;
+}
+
+td {
+  height: 10px !important;
+}
+
+.event:hover {
+  cursor: pointer;
+  filter: brightness(80%);
 }

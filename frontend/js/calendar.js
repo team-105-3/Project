@@ -1,5 +1,10 @@
 $.fn.modal.Constructor.prototype.enforceFocus = function () {};
 
+//////////////////////////////////
+/// PROJECT AND EVENT CREATION ///
+//////////////////////////////////
+
+
 /**
  * Creates an event and sends it to the server.
  */
@@ -144,19 +149,17 @@ function clearAllEntries() {
     var background = document.body.style.backgroundColor;
 }
 
-function clock() {
-    var d = new Date();
-    var date = d.getDate();
-    var year = d.getFullYear();
-    var month = d.getMonth();
-    var monthArr = ["January", "February","March", "April", "May", "June", "July", "August", "September", "October", "November","December"];
-    month = monthArr[month];
-    document.getElementById("date").innerHTML=month+" "+year;
-}
+///////////////////////////////////////////
+/// UI AND EVENT / PROJECT CALCULATIONS ///
+///////////////////////////////////////////
 
 const weekarr = ["Sun&nbsp;", "Mon&nbsp;", "Tues", "Wed&nbsp;", "Thurs", "Fri&nbsp;", "Sat&nbsp;"];
 const montharr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+/**
+ * Displays todays date in upper left corner
+ * @param {*} user 
+ */
 function displayDate(user) {
     var currentDate = user.currentUserDate;
     var month = currentDate.getMonth();
@@ -164,23 +167,34 @@ function displayDate(user) {
     document.getElementById('todays-date').innerHTML = weekarr[dayOfWeek] + ", " + montharr[month] + " " + currentDate.getDate() + ", " + currentDate.getFullYear(); 
 }
 
+/**
+ * Generates the calendar table, much easier to modify all rows/columns/cells than having a huge table in html file
+ */
 function createCalendarTable() {
     $('#days-of-week').append('<th scope="row">Schedule</th>');
     for(var i = 0; i < 7; i++) {
-        $('#days-of-week').append('<th style="text-align:center;" scope="col">' + weekarr[i] + '</th>');
+        $('#days-of-week').append('<th style="text-align:center;" scope="col" id="' + weekarr[i].split('&')[0] + '">' + weekarr[i] + '</th>');
     } 
     for(var i = 0; i < 24; i++) {
         var k = ((i==12||i==0)?12:(i%12));
         var content = '<tr>';
         content += '<td scope="row">' + ((k<10)?'0':'') + k + ':00' + ((i<12)?'AM':'PM') + '</td>';
         for(var l = 0; l < 7; l++) {
-            content += '<td scope="col"></td>';
+            content += '<td class="cal-cell"></td>';
         }
         content += '</tr>';
         $('#weekly-calendar').append(content);
     }
 }
 
+/**
+ * Displays the events for this week in the calendar
+ * 
+ * CURRENTLY BROKEN
+ * 
+ * TODO: fix margins / padding calculation so events are lined up correctly with the time they set for
+ * @param {user class containing events to display} user 
+ */
 function displayUsersEvents(user) {
     //get all of a users events for the current week
     var events = user.currentEvents;
@@ -200,12 +214,16 @@ function displayUsersEvents(user) {
 
             var cell = document.getElementById("weekly-calendar").rows[startHour].cells[i+1];
 
-            cell.setAttribute('rowspan', totalHours + 1);
+            cell.setAttribute('rowspan', totalHours + ((endMin > 0)?1:0));
             cell.style.padding = "0px";
             cell.style.margin = "0px";
+            //cell.style.paddingTop = (startMin / 60) * 100 + "px";
             var eventDiv = document.createElement('div');
             eventDiv.className = 'event';
-            eventDiv.style.marginTop = ((startMin / 60) * 100) / 8 + "%";
+            //eventDiv.style.marginTop = (startMin / 60) * 100 + "%";
+            
+
+            eventDiv.onclick = function() { console.log(event); }
 
             var title = document.createTextNode(event.title);
             eventDiv.appendChild(title);
@@ -214,11 +232,14 @@ function displayUsersEvents(user) {
     }
 }
 
+//clears the calendar of all events and projects, resets the cells
 function clearAllEventsAndProjects() {
     $('.event').remove();
     $('.project').remove();
+    $('td').attr('rowspan', 1);
 }
 
+//Converts standard 12 hour time to 24 hour time
 function standard2Military(str) {
     var hour = parseInt(str.split(':')[0]);
     var o = str.split(":")[1].split(" ");
@@ -231,6 +252,13 @@ function standard2Military(str) {
     } else {
         hour = (AMPM === 'AM' && hour > 12)?hour:hour+12;
     }
-    return [hour, min];
-    
+    return [hour, min];   
+}
+
+//highlights the current day on the top of the calendar that corresponds to the current day in top left corner
+function highlightDate(user) {
+    for(var i = 0; i < weekarr.length; i++) {
+        document.getElementById(weekarr[i].split('&')[0]).style.backgroundColor = "white";
+    }
+    document.getElementById(weekarr[user.currentUserDate.getDay()].split('&')[0]).style.backgroundColor = "lightskyblue";
 }
