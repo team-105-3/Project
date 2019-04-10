@@ -180,7 +180,7 @@ function createCalendarTable() {
         var content = '<tr>';
         content += '<td scope="row">' + ((k<10)?'0':'') + k + ':00' + ((i<12)?'AM':'PM') + '</td>';
         for(var l = 0; l < 7; l++) {
-            content += '<td class="cal-cell"></td>';
+            content += '<td class="cal-cell"><div class="cell-wrapper"></div></td>';
         }
         content += '</tr>';
         $('#weekly-calendar').append(content);
@@ -215,19 +215,29 @@ function displayUsersEvents(user) {
             var cell = document.getElementById("weekly-calendar").rows[startHour].cells[i+1];
 
             cell.setAttribute('rowspan', totalHours + ((endMin > 0)?1:0));
-            cell.style.padding = "0px";
+            cell.style.padding = "0px"; 
             cell.style.margin = "0px";
             //cell.style.paddingTop = (startMin / 60) * 100 + "px";
+            var eventDivContainer = document.createElement('div');
+            eventDivContainer.style.paddingTop = startMin / 3 + "%";
+            if(endMin == 0) {
+                eventDivContainer.style.paddingBottom = "0%";
+            } else {
+                eventDivContainer.style.paddingBottom = totalHours * 10 + ((60 - endMin) / 3) + "%";
+            }
+            eventDivContainer.className = 'event-container';
+            
             var eventDiv = document.createElement('div');
+            //eventDiv.style.height = "50%";
             eventDiv.className = 'event';
-            //eventDiv.style.marginTop = (startMin / 60) * 100 + "%";
             
 
             eventDiv.onclick = function() { console.log(event); }
 
             var title = document.createTextNode(event.title);
             eventDiv.appendChild(title);
-            cell.appendChild(eventDiv);
+            eventDivContainer.appendChild(eventDiv);
+            cell.childNodes[0].appendChild(eventDivContainer);
         });
     }
 }
@@ -237,6 +247,7 @@ function clearAllEventsAndProjects() {
     $('.event').remove();
     $('.project').remove();
     $('td').attr('rowspan', 1);
+    $('.event-container').remove();
 }
 
 //Converts standard 12 hour time to 24 hour time
@@ -250,7 +261,7 @@ function standard2Military(str) {
     } else if(AMPM == 'PM' && hour == 12) {
         hour == 12;
     } else {
-        hour = (AMPM === 'AM' && hour > 12)?hour:hour+12;
+        hour = (AMPM === 'AM' && hour < 12)?hour:hour+12;
     }
     return [hour, min];   
 }
