@@ -1,0 +1,12 @@
+#grad {
+    background-image: linear-gradient(skyblue, gray);
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-image: linear-gradient(skyblue,gray);
+}
+
