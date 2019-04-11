@@ -42,8 +42,8 @@
 
 .event-container {
   flex-basis: 100%;
-  padding-left: 0%;
-  padding-right: 0%;
+  padding-left: 1px;
+  padding-right: 1px;
 }
 
 
@@ -63,5 +63,4 @@ td {
 
 .event:hover {
   cursor: pointer;
-  filter: brightness(80%);
 }

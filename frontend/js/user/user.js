@@ -39,7 +39,7 @@ User.prototype.isEventOnDay = function(date, event) {
             if(event.timeframe == 1) {
                 currentDate.setDate(currentDate.getDate() + 1 * multiplier);
             } else if (event.timeframe == 2) {
-                currentDate.setDate(currentDate.getDate() + 14 * multiplier);
+                currentDate.setDate(currentDate.getDate() + 7 * multiplier);
             } else if (event.timeframe == 3) {
                 currentDate.setMonth(currentDate.getMonth() + 1 * multiplier);
             } else if (event.timeframe == 4) {

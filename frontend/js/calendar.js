@@ -8,7 +8,7 @@ $.fn.modal.Constructor.prototype.enforceFocus = function () {};
 /**
  * Creates an event and sends it to the server.
  */
-function createCalendarEvent() {
+function createCalendarEvent(callback) {
     var title = document.getElementById('e_title').value;
     var startTime = document.getElementById('est').value;
     var endTime = document.getElementById('eet').value;
@@ -70,6 +70,7 @@ function createCalendarEvent() {
         } else {
             console.log('failed to create event');
         }
+        //callback();
     }
 
     request.send(JSON.stringify(sendObj));
@@ -212,32 +213,73 @@ function displayUsersEvents(user) {
 
             var totalHours = endHour - startHour;
 
-            var cell = document.getElementById("weekly-calendar").rows[startHour].cells[i+1];
+            var totalSlots = totalHours + ((endMin > 0)?1:0);
 
-            cell.setAttribute('rowspan', totalHours + ((endMin > 0)?1:0));
-            cell.style.padding = "0px"; 
-            cell.style.margin = "0px";
-            //cell.style.paddingTop = (startMin / 60) * 100 + "px";
-            var eventDivContainer = document.createElement('div');
-            eventDivContainer.style.paddingTop = startMin / 3 + "%";
-            if(endMin == 0) {
-                eventDivContainer.style.paddingBottom = "0%";
-            } else {
-                eventDivContainer.style.paddingBottom = totalHours * 10 + ((60 - endMin) / 3) + "%";
+            for(j = 0; j < totalSlots; j++) {
+                var cell = document.getElementById("weekly-calendar").rows[startHour + j].cells[i+1];
+                cell.style.padding = "0px"; 
+                cell.style.margin = "0px";
+                var eventDivContainer = document.createElement('div');
+                eventDivContainer.className = 'event-container';
+            
+                var eventDiv = document.createElement('div');
+                //eventDiv.style.height = "50%";
+                eventDiv.id = event.title + "-" + i;
+                eventDiv.className = 'event ' + eventDiv.id;
+
+                //rules of the road
+                if(j == 0) {
+                    eventDivContainer.style.paddingTop = startMin / 3 + "%";
+                    if(startMin == 0) {
+                        eventDivContainer.style.paddingTop = '1px';
+                    }
+                }
+
+                if(j == totalSlots - 1) {
+                    if(endMin == 0) {
+                        eventDivContainer.style.paddingBottom = "1px";
+                    } else {
+                        eventDivContainer.style.paddingBottom = totalHours * 10 + ((60 - endMin) / 3) + "%";
+                    }
+                }
+
+                if(j > 0) {
+                    eventDiv.style.borderTopLeftRadius = '0px';
+                    eventDiv.style.borderTopRightRadius = '0px';
+                    cell.style.borderTopWidth = '0px';
+                }
+                
+                if(totalSlots > 1 && j < totalSlots - 1) {
+                    eventDiv.style.borderBottomLeftRadius = '0px';
+                    eventDiv.style.borderBottomRightRadius = '0px';
+                    cell.style.borderBottomWidth = '0px';
+                }
+
+                //eventDiv.onclick = function() { 
+                //
+                //}
+
+                //in order to play the game, ya gotta know the rules
+                eventDiv.onmouseover = function() {
+                    var e = document.getElementsByClassName(this.id);
+                    Array.prototype.forEach.call(e, function(el) {
+                        el.style.webkitFilter = "brightness(80%)";    
+                    });
+                }
+
+                eventDiv.onmouseleave = function() {
+                    var e = document.getElementsByClassName(this.id);
+                    Array.prototype.forEach.call(e, function(el) {
+                        el.style.webkitFilter = "brightness(100%)";    
+                    });
+                }
+
+                //break it down, then build it back up
+                var title = document.createTextNode(event.title);
+                eventDiv.appendChild(title);
+                eventDivContainer.appendChild(eventDiv);
+                cell.childNodes[0].appendChild(eventDivContainer);
             }
-            eventDivContainer.className = 'event-container';
-            
-            var eventDiv = document.createElement('div');
-            //eventDiv.style.height = "50%";
-            eventDiv.className = 'event';
-            
-
-            eventDiv.onclick = function() { console.log(event); }
-
-            var title = document.createTextNode(event.title);
-            eventDiv.appendChild(title);
-            eventDivContainer.appendChild(eventDiv);
-            cell.childNodes[0].appendChild(eventDivContainer);
         });
     }
 }
@@ -248,6 +290,7 @@ function clearAllEventsAndProjects() {
     $('.project').remove();
     $('td').attr('rowspan', 1);
     $('.event-container').remove();
+    $('.cal-cell').css({'border-top-width': '1px', 'border-bottom-width': '1px'});
 }
 
 //Converts standard 12 hour time to 24 hour time

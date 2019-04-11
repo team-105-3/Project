@@ -4,3 +4,4 @@ registerSuccess
 loginFailure_BLGN
 loginSuccess
 registerFailure
+testAddEvent
