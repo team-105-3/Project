@@ -70,7 +70,7 @@ function createCalendarEvent(callback) {
         } else {
             console.log('failed to create event');
         }
-        //callback();
+        callback();
     }
 
     request.send(JSON.stringify(sendObj));
@@ -106,10 +106,25 @@ function deleteEvent(callback) {
         var status = request.response.status;
         if(status == 1) {
             console.log("successfully deleted event");
+            var events = user.events;
+            var ind= -1;
+            for(var i = 0; i < events.length; i++) {
+                if(events[i].id == eventKey) {
+                    ind = i;
+                    break;
+                }
+            }
+
+            if(ind == -1) {
+                return res.status(400).send(JSON.stringify({"status": 0}));
+            }
+            events.splice(ind, 1);
+
+            user.events = events;
         } else {
             console.log('failed to delete event');
         }
-        //callback();
+        callback();
     }
 
     request.send(JSON.stringify(data));
@@ -121,7 +136,7 @@ function deleteEvent(callback) {
 /**
  * Creates a project and sends it to the server
  */
-function createCalendarProject() {
+function createCalendarProject(callback) {
     var title = document.getElementById('p_title').value;
     var startDate = document.getElementById('pst').value;
     var dueDate = document.getElementById('pet').value;
@@ -173,6 +188,8 @@ function createCalendarProject() {
         } else {
             console.log("Failed to create project");
         }
+
+        callback();
     }
 
     request.send(JSON.stringify(sendObj));
@@ -369,4 +386,14 @@ function highlightDate(user) {
         document.getElementById(weekarr[i].split('&')[0]).style.backgroundColor = "white";
     }
     document.getElementById(weekarr[user.currentUserDate.getDay()].split('&')[0]).style.backgroundColor = "lightskyblue";
+}
+
+//function to be called everytime user does something that updates UI
+function updateUI() {
+    user.update(); //update current user projects and events
+    displayDate(user); //display correct date in top left
+    clearAllEventsAndProjects(); //reset calendar
+    displayUsersEvents(user); //display all events in calendar
+    console.log(user); //log user status (for debugging)
+    highlightDate(user); //highlight current date in top bar
 }
