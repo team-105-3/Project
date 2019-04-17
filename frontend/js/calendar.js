@@ -78,6 +78,46 @@ function createCalendarEvent(callback) {
 
 }
 
+function deleteEvent(callback) {
+    //get users key
+    var userKey = new URL(window.location.href).searchParams.get('key');
+    var eventKey = document.getElementById('id-holder').innerHTML;
+
+    var data = {
+        userKey: userKey,
+        eventKey: eventKey
+    }
+
+    //create ajax request
+    var request = new XMLHttpRequest();
+
+    var url = connectUrl + "/deleteEvent/";
+
+    //open up a post requst to defined url
+    request.open('POST', url);
+    request.setRequestHeader("Content-type", "application/json");
+
+    //we will be getting a text response from server
+    request.responseType = "json";
+
+    //when we have gotten a response from the server, print it to the console
+    request.onload = function() {
+        //$('#loading').modal('hide');
+        var status = request.response.status;
+        if(status == 1) {
+            console.log("successfully deleted event");
+        } else {
+            console.log('failed to delete event');
+        }
+        //callback();
+    }
+
+    request.send(JSON.stringify(data));
+
+
+    //console.log(userKey, eventKey);
+}
+
 /**
  * Creates a project and sends it to the server
  */
@@ -190,10 +230,7 @@ function createCalendarTable() {
 
 /**
  * Displays the events for this week in the calendar
- * 
- * CURRENTLY BROKEN
- * 
- * TODO: fix margins / padding calculation so events are lined up correctly with the time they set for
+ *  
  * @param {user class containing events to display} user 
  */
 function displayUsersEvents(user) {
@@ -255,9 +292,26 @@ function displayUsersEvents(user) {
                     cell.style.borderBottomWidth = '0px';
                 }
 
-                //eventDiv.onclick = function() { 
-                //
-                //}
+                eventDiv.onclick = function() { 
+                    //fill in edit modal with info
+                    $('#editEventModal').modal('toggle');
+                    $('#e_title_edit').val(event.title);
+                    $('#est_edit').val(event.startTime);
+                    $('#eet_edit').val(event.endTime);
+                    $('#recurring_edit').prop('checked', event.recurring);
+                    $('#esd_edit').val(event.startDate);
+                    if(event.recurring) {
+                        $('#ed_edit').prop('disabled', false);
+                        $('#ed_edit').val(event.endDate);
+                        $('#rec_edit').prop('disabled', false);
+                        $('#rec_edit').val(event.recurrency);
+                        $('#timeframe_edit').prop('disabled', false);
+                        $('#timeframe_edit').val(event.timeframe);
+                    }
+                    $('#e_desc_edit').val(event.description);
+                    //store events id for backend usage
+                    $('#id-holder').text(event.id);
+                }
 
                 //in order to play the game, ya gotta know the rules
                 eventDiv.onmouseover = function() {

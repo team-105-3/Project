@@ -212,6 +212,7 @@ function getAllEvents(callback) {
                                         element.description, element.recurrency, 
                                         element.timeframe);
                 
+                console.log(event);
                 user.addEvent(event);
             });
         }

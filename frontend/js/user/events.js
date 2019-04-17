@@ -8,4 +8,5 @@ function Event(title, startTime, endTime, recurring, startDate, endDate, descrip
     this.description = description;
     this.recurrency = recurrency;
     this.timeframe = timeframe;
+    this.id = fastHash(this.title + this.startDate + this.startTime + this.description);
 }
