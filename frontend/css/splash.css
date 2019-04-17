@@ -48,12 +48,22 @@ body {
   font-size: 200%;
 }
 
-.btn-outline-primary, .btn-outline-primary:active, .btn-outline-primary:visited { 
-  color: white;
-  border-color: white;
+.rightButton {
+  color: rgba(34, 255, 181, 0.719)!important; 
+  border-color: rgba(34, 255, 181, 0.719)!important;
 }
 
-.btn:hover, .btn-outline-primary:hover, .btn-outline-primary:active {
-  background-color: white;
-  color: grey;
+.leftButton {
+  color: rgba(78, 78, 78, 0.719)!important; 
+  border-color: rgba(78, 78, 78, 0.719)!important;
+}
+
+.rightButton:hover {
+  background-color:   rgba(34, 255, 181, 0.719)!important;
+  color: rgba(78, 78, 78, 0.719)!important;
+}
+
+.leftButton:hover {
+  background-color:   rgba(78, 78, 78, 0.719)!important;
+  color: rgba(34, 255, 181, 0.719)!important;
 }
