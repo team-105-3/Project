@@ -1,0 +1,59 @@
+body {
+  background-image: url('../img/Calendar-Background.png');
+}
+
+.div_test {
+  border: 1px solid red;
+}
+
+.left_half {
+  background-color: rgba(34, 255, 181, 0.719);
+  left: 0;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 70%;
+}
+
+.right_half {
+  background-color: rgba(78, 78, 78, 0.719);
+  right:0;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 70%;
+}
+
+.split:hover {
+  box-shadow: 0 8px 55px 0 rgba(0,0,0,0.2);
+}
+
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.centering {
+  text-align: center;
+}
+
+.btn_room {
+  margin-top: 575px;
+}
+
+.btn_font {
+  font-size: 200%;
+}
+
+.btn-outline-primary, .btn-outline-primary:active, .btn-outline-primary:visited { 
+  color: white;
+  border-color: white;
+}
+
+.btn:hover, .btn-outline-primary:hover, .btn-outline-primary:active {
+  background-color: white;
+  color: grey;
+}
