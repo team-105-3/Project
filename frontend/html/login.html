@@ -21,66 +21,74 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <link rel="stylesheet" href="../css/login.css">
         <title>Login</title>
     </head>
     <body>
-        <div class="container">
-            <h1>
-                Login to SmartCal
-            </h1>
 
-            <div class="modal" tabindex="-1" role="dialog" id="loading">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        <div class ="container">
+            <div class="d-flex justify-content-center">
+                <img class="centering" src="../img/logo.png" alt="logo">
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h1>
+                        <center> Login </center>
+                    </h1>
+                
+                    <div class="modal" tabindex="-1" role="dialog" id="loading">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="alert alert-success" id="good-reg" style="display: none">
+                        Thank you for registering with SmartCal, please login to continue.
+                    </div>
+
+                    <div class="alert alert-warning" id="bad-reg" style="display: none">
+                        This email address has already been registered,
+                        please login with that email address or 
+                        <a class="alert-link" href="register.html">click here to register with a different email address</a>, 
+                        or <a class="alert-link" href="passwordRecover.html">click here to reset your password.</a>
+                    </div>
+
+                    <div class="alert alert-danger" id="bad-login" style="display: none">
+                        Wrong email address or password. 
+                        <a class="alert-link" href="passwordRecover.html">Click here to reset your password.</a>
+                    </div>
+
+                    <div class="alert alert-danger" id="email-warning" style="display: none">
+                        Please enter a valid email address.
+                    </div>
+
+                    <!--Email-->
+                    <div class="form-group">
+                        <label for="email"><b>Email Address</b></label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter Email">
+                    </div>
+
+                    <div class="alert alert-danger" id="password-warning" style="display: none">
+                        Please enter a valid password.
+                    </div>
+
+                    <!--Password-->
+                    <div class="form-group">
+                        <label for="password"><b>Password</b></label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter Password">
+                    </div>
+
+                    <!--Submit Button-->
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" onclick="login()">Submit</button>
                     </div>
                 </div>
             </div>
-
-            <div class="alert alert-success" id="good-reg" style="display: none">
-                Thank you for registering with SmartCal, please login to continue.
-            </div>
-
-            <div class="alert alert-warning" id="bad-reg" style="display: none">
-                This email address has already been registered,
-                please login with that email address or 
-                <a class="alert-link" href="register.html">click here to register with a different email address</a>, 
-                or <a class="alert-link" href="passwordRecover.html">click here to reset your password.</a>
-            </div>
-
-            <div class="alert alert-danger" id="bad-login" style="display: none">
-                Wrong email address or password. 
-                <a class="alert-link" href="passwordRecover.html">Click here to reset your password.</a>
-            </div>
-
-            <div class="alert alert-danger" id="email-warning" style="display: none">
-                Please enter a valid email address.
-            </div>
-
-            <!--Email-->
-            <div class="form-group">
-                <label for="email"><b>Email Address</b></label>
-                <input type="email" class="form-control" id="email" placeholder="Enter Email">
-            </div>
-
-            <div class="alert alert-danger" id="password-warning" style="display: none">
-                Please enter a valid password.
-            </div>
-
-            <!--Password-->
-            <div class="form-group">
-                <label for="password"><b>Password</b></label>
-                <input type="password" class="form-control" id="password" placeholder="Enter Password">
-            </div>
-
-            <!--Submit Button-->
-            <div class="form-group">
-                <button type="submit" class="btn btn-success" onclick="login()">Submit</button>
-            </div>
         </div>
-
         <script>
             window.onload = function() {
                 var urlParams = new URLSearchParams(window.location.search);
