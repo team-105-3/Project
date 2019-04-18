@@ -1,0 +1,17 @@
+body{
+	background-image: linear-gradient(rgba(34, 255, 181, 0.719), rgba(78, 78, 78, 0.719));
+	background-repeat: no-repeat;
+	height: 100%;
+	background-attachment: fixed;
+	margin: 0;
+}
+
+
+
+div[class="row"]{
+	background-color: gray;
+  	border: 15px solid black;
+  	padding: 50px;
+  	margin: 100px;
+  	margin-top: 0px;
+}
