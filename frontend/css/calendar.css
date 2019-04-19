@@ -30,6 +30,7 @@
   cursor: pointer;
   margin: 5px;
 }
+
 .c-btn:hover {
   background-color: #28a745;
   color: white;
@@ -46,6 +47,25 @@
   padding-right: 1px;
 }
 
+.project-container {
+  flex-basis: 100%;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+.project {
+  z-index: 100000;
+  height: 100%;
+  border-radius: 5px;
+  width: 100%;
+  text-overflow: ellipsis;
+  padding: 5px;
+  margin: 0%;
+  background-color: orange;
+  text-align: center;
+  color: white;
+}
+ 
 
 .event {
   z-index: 100000;
@@ -55,6 +75,9 @@
   text-overflow: ellipsis;
   padding: 5px;
   margin: 0%;
+  background-color: deepskyblue;
+  text-align: center;
+  color: white;
 }
 
 td {
@@ -62,5 +85,9 @@ td {
 }
 
 .event:hover {
+  cursor: pointer;
+}
+
+.project:hover {
   cursor: pointer;
 }
