@@ -136,12 +136,27 @@ function saveEventChanges(callback) {
         var status = request.response.status;
         if(status == 1) {
             console.log("successfully edited event");
-            // user.addEvent(event);
+            var events = user.events;
+            var ind= -1;
+            for(var i = 0; i < events.length; i++) {
+                if(events[i].id == eventKey) {
+                    ind = i;
+                    break;
+                }
+            }
+
+            if(ind == -1) {
+                return res.status(400).send(JSON.stringify({"status": 0}));
+            }
+
+            events[ind] = event;
+
+            user.events = events;
         } else {
             console.log('failed to edit event');
         }
-        //callback();
-    };
+        callback();
+    }
 
     request.send(JSON.stringify(sendObj));
     //$('#loading').modal('show');
