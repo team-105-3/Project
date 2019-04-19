@@ -24,6 +24,7 @@ const sendPasswordRecovery = require('./back-js/passwordRecovery');
 const resetPassword = require('./back-js/resetPassword');
 const sendProjectReminders = require('./back-js/emailReminders');
 const deleteEvent = require('./back-js/deleteEvent');
+const editEvent = require('./back-js/editEvent');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly ' + 'https://www.googleapis.com/auth/gmail.send'];
@@ -159,6 +160,10 @@ router.post("/createEvent", function(req, res) {
 
 router.post("/createProject", function(req, res) {
     createProject(req.body, res);
+});
+
+router.post("/editEvent", function(req, res) {
+    editEvent(req.body, res);
 });
 
 router.post("/deleteEvent", function(req, res) {

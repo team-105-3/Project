@@ -78,6 +78,75 @@ function createCalendarEvent(callback) {
 
 }
 
+function saveEventChanges(callback) {
+    var eventKey = document.getElementById('id-holder').innerHTML;
+    var title = document.getElementById('e_title_edit').value;
+    var startTime = document.getElementById('est_edit').value;
+    var endTime = document.getElementById('eet_edit').value;
+    var recurring = document.getElementById('recurring_edit').checked;
+    var startDate = document.getElementById('esd_edit').value;
+    var endDate = document.getElementById('ed_edit').value;
+    var desc = document.getElementById('e_desc_edit').value;
+    var rec = document.getElementById('rec_edit').value;
+    var timeframe = document.getElementById('timeframe_edit').value;
+
+    console.log(rec, timeframe);
+
+    var fail = false;
+    if(emptyString(title) || emptyString(startTime) || emptyString(endTime) || emptyString(startDate)) {
+        fail = true;
+    }
+
+    if(recurring && (emptyString(endDate) || rec == "Choose..." || timeframe == "Choose...")) {
+        fail = true;
+    }
+
+    $('#createEventModal').modal('toggle');
+    clearAllEntries();
+
+    if(fail) {
+        $('#createEventModal').on('hidden.bs.modal', function() {
+            $('#eventCreationFail').modal('toggle');
+        });
+        return;
+    }
+
+    var event = new Event(title, startTime, endTime, recurring, startDate, endDate, desc, rec, timeframe);
+
+    var idKey = new URL(window.location.href).searchParams.get('key');
+
+    var sendObj = {userKey: idKey, eventKey: eventKey, newEvent: event};
+
+
+    //create ajax request
+    var request = new XMLHttpRequest();
+
+    var url = connectUrl + "/editEvent/";
+
+    //open up a post requst to defined url
+    request.open('POST', url);
+    request.setRequestHeader("Content-type", "application/json");
+
+    //we will be getting a text response from server
+    request.responseType = "json";
+
+    //when we have gotten a response from the server, print it to the console
+    request.onload = function() {
+        //$('#loading').modal('hide');
+        var status = request.response.status;
+        if(status == 1) {
+            console.log("successfully edited event");
+            // user.addEvent(event);
+        } else {
+            console.log('failed to edit event');
+        }
+        //callback();
+    };
+
+    request.send(JSON.stringify(sendObj));
+    //$('#loading').modal('show');
+}
+
 function deleteEvent(callback) {
     //get users key
     var userKey = new URL(window.location.href).searchParams.get('key');
