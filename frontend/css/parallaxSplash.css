@@ -1,29 +1,6 @@
-body {
-  background-image: url('../img/Calendar-Background.png');
-}
-
-.div_test {
-  border: 1px solid red;
-}
-
-.left_half {
-  background-color: rgba(34, 255, 181, 0.719);
-  left: 0;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  width: 70%;
-}
-
-.right_half {
-  background-color: rgba(78, 78, 78, 0.719);
-  right:0;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  width: 70%;
-}
-
-.split:hover {
-  box-shadow: 0 8px 55px 0 rgba(0,0,0,0.2);
+body, html {
+  height: 100%;
+  margin: 0;
 }
 
 .split {
@@ -41,7 +18,7 @@ body {
 }
 
 .btn_room {
-  margin-top: 575px;
+  margin-top: 20px;
 }
 
 .btn_font {
@@ -70,16 +47,36 @@ body {
 
 .parallax { 
   /* The image used */
-  background-image: url('../img/Calendar-Background.png');
+  background-image: 
+    linear-gradient(90deg, rgba(34, 255, 181, 0.719) 50%, rgba(78, 78, 78, 0.719) 50%), url('../img/Calendar-Background.png');
 
   /* Set a specific height */
-  height: auto; 
+  /*height: 20%; */
 
   /* Create the parallax scrolling effect */
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+body, html {
+
+  /*
+  background-image: 
+  
+  linear-gradient(90deg, rgba(34, 255, 181, 0.719) 50%, rgba(78, 78, 78, 0.719) 50%), 
+
+  url('../img/Calendar-Background.png');
+  
+  background-repeat: no-repeat;
+  background-size: cover;
+  */
+
+  /*gradient */
+  background: linear-gradient(90deg, rgba(34, 255, 181, 0.719), rgba(78, 78, 78, 0.719));
+  z-index: 1;
+  
 }
 
 .caption {
@@ -89,3 +86,10 @@ body {
   width: 100%;
   text-align: center;
 }
+
+@media only screen and (max-device-width: 1024px)
+ {
+   .bgimg-1, .bgimg-2, .bgimg-3 {
+     background-attachment: scroll;
+   }
+ }
