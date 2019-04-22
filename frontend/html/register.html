@@ -13,6 +13,9 @@
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
+        <!--Custom CSS-->
+        <link rel="stylesheet" type="text/css" href="../css/register.css">
+
         <link rel="stylesheet" href="../css/loader.css">
         <script src="../js/util.js"></script>
         <script src="../js/register.js"></script>
@@ -25,9 +28,7 @@
     </head>
     <body>
         <div class="container">
-            <h1>
-                Register for SmartCal
-            </h1>
+            <center> <img src="../img/logo.png" alt="Logo"> </center>
 
             <div class="modal" tabindex="-1" role="dialog" id="loading">
                 <div class="modal-dialog" role="document">
@@ -42,41 +43,47 @@
             <div class="alert alert-danger" id="name-warning" style="display: none">
                 Please enter a valid name.
             </div>
+
+            <div class="row">
+                <center> <h1>Register for SmartCal</h1>  </center> 
             <!--First Name-->
-            <div class="form-group">
-                <label for="fname"><b>First Name</b></label>
-                <input type="text" class="form-control" id="fname" placeholder="Enter First Name">
-            </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label for="fname"><b>First Name</b></label>
+                        <input type="text" class="form-control" id="fname" placeholder="Enter First Name">
+                    </div>
 
-            <!--Last Name-->
-            <div class="form-group">
-                <label for="lname"><b>Last Name</b></label>
-                <input type="text" class="form-control" id="lname" placeholder="Enter Last Name">
-            </div>
+                    <!--Last Name-->
+                    <div class="form-group">
+                        <label for="lname"><b>Last Name</b></label>
+                        <input type="text" class="form-control" id="lname" placeholder="Enter Last Name">
+                    </div>
 
-            <div class="alert alert-danger" id="email-warning" style="display: none">
-                Please enter a valid email address.
-            </div>
+                    <div class="alert alert-danger" id="email-warning" style="display: none">
+                        Please enter a valid email address.
+                    </div>
 
-            <!--Email-->
-            <div class="form-group">
-                <label for="email"><b>Email Address</b></label>
-                <input type="email" class="form-control" id="email" placeholder="Enter Email">
-            </div>
+                    <!--Email-->
+                    <div class="form-group">
+                        <label for="email"><b>Email Address</b></label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter Email">
+                    </div>
 
-            <div class="alert alert-danger" id="password-warning" style="display: none">
-                Please enter a valid password.
-            </div>
+                    <div class="alert alert-danger" id="password-warning" style="display: none">
+                        Please enter a valid password.
+                    </div>
 
-            <!--Password-->
-            <div class="form-group">
-                <label for="password"><b>Password</b></label>
-                <input type="password" class="form-control" id="password" placeholder="Enter Password">
-            </div>
+                    <!--Password-->
+                    <div class="form-group">
+                        <label for="password"><b>Password</b></label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter Password">
+                    </div>
 
-            <!--Submit Button-->
-            <div class="form-group">
-                <button type="submit" class="btn btn-success" onclick="register()">Submit</button>
+                    <!--Submit Button-->
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" onclick="register()">Register</button>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
