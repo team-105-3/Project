@@ -560,6 +560,109 @@
                     </div>
                 </div>
             </div>
+
+            <!--Edit Project Modal-->
+            <div class="modal fade" id="editProjectModal" tabindex="-1" role="dialog" aria-labelledby="project-edit-modal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Create Project</h5>
+                        </div>
+
+                        <!--Create Project Form-->
+                        <div class="modal-body">
+                            <!--Title-->
+                            <div class="form-group">
+                                <input type="text" class="form-control entry" id="p_title_edit" placeholder="Project Title">
+                            </div>
+
+                            <!--Time-->
+                            <div class="row">
+                                <div class='col-sm-6'>
+                                    <div class="form-group">
+                                        <label for="p_start_time_edit">Start Date</label>
+                                        <div class='input-group date' id='datetimepickerPS_edit'>
+                                            <input id="pst_edit" type='text' class="form-control entry" id="p_start_time_edit"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#datetimepickerPS_edit').datetimepicker({
+                                            format: "MM/DD/YYYY"
+                                        });
+                                    });
+                                </script>
+                                <div class='col-sm-6'>
+                                    <div class="form-group">
+                                        <label for="p_end_time_edit">Due Date</label>
+                                        <div class='input-group date' id='datetimepickerPE_edit'>
+                                            <input id="pet_edit" type='text' class="form-control entry" id="p_end_time_edit"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#datetimepickerPE_edit').datetimepicker({
+                                            format: "MM/DD/YYYY"
+                                        });
+                                    });
+                                </script>
+                            </div>
+
+                            <!--Time Input-->
+                            <div class="row">
+                                <div class='col'>
+                                    <h4>Expected amount of time to finish:</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-6'>
+                                    <div class="form-group">
+                                        <label for="p_hours_edit">Hours</label>
+                                        <input id="p_hours_edit" type='number' class="form-control entry" />
+                                    </div>
+                                </div>
+                                <div class='col-md-6'>
+                                    <div class="form-group">
+                                        <label for="p_min_edit">Minutes</label>
+                                        <input id="p_min_edit" type='number' class="form-control entry" />
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    document.getElementById('p_hours_edit').onchange = function() {
+                                        this.value = Math.max(0, parseInt(this.value));
+                                    }
+
+                                    document.getElementById('p_min_edit').onchange = function() {
+                                        this.value = Math.max(0, Math.min(59, parseInt(this.value)));
+                                    }
+                                </script>
+                            </div>
+
+                            <!--Description-->
+                            <div class="form-group">
+                                <label for="p_desc_edit">Project Description</label>
+                                <textarea class="form-control entry" id="p_desc_edit" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <!--Cancel and submit buttons-->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteProject(updateUI)" style="float: left;">Delete Event</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearAllEntries()">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="saveProjectChanges(updateUI)">Save Changes</button>
+                            <p id="id-holder" style="display: none;"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <script type="text/javascript">
             var user = new User();

@@ -280,6 +280,134 @@ function createCalendarProject(callback) {
     //$('#loading').modal('show');
 }
 
+function saveProjectChanges(callback) {
+    var projectKey = document.getElementById('id-holder').innerHTML;
+    var title = document.getElementById('p_title_edit').value;
+    var startDate = document.getElementById('pst_edit').value;
+    var dueDate = document.getElementById('pet_edit').value;
+    var expTimeHours = document.getElementById('p_hours_edit').value;
+    var expTimeMin = document.getElementById('p_min_edit').value;
+    var desc = document.getElementById('p_desc_edit').value;
+
+    var fail = false;
+    if(emptyString(title) || emptyString(startDate) || emptyString(dueDate) || emptyString(expTimeHours)) {
+        fail = true;
+    }
+
+    $('#createProjectModal').modal('toggle');
+    clearAllEntries();
+
+    if(fail) {
+        $('#createProjectModal').on('hidden.bs.modal', function() {
+            $('#projectCreationFail').modal('toggle');
+        });
+        return;
+    }
+
+    console.log(projectKey);
+    var project = new Project(title, startDate, dueDate, expTimeHours, expTimeMin, desc, expTimeHours * 60 + expTimeMin);
+
+    var idKey = new URL(window.location.href).searchParams.get('key');
+
+    var sendObj = {userKey: idKey, projectKey: projectKey, newProj: project};
+
+
+    //create ajax request
+    var request = new XMLHttpRequest();
+
+    var url = connectUrl + "/editProject/";
+
+    //open up a post requst to defined url
+    request.open('POST', url);
+    request.setRequestHeader("Content-type", "application/json");
+
+    //we will be getting a text response from server
+    request.responseType = "json";
+
+    //when we have gotten a response from the server, print it to the console
+    request.onload = function() {
+        //$('#loading').modal('hide');
+        var status = request.response.status;
+        if(status == 1) {
+            console.log("successfully edited project");
+            var projects = user.projects;
+            var ind = -1;
+            for(var i = 0; i < projects.length; i++) {
+                if(projects[i].id == projectKey) {
+                    ind = i;
+                    break;
+                }
+            }
+
+            if(ind == -1) {
+                return res.status(400).send(JSON.stringify({"status": 0}));
+            }
+
+            projects[ind] = project;
+
+            user.projects = projects;
+        } else {
+            console.log('failed to edit project');
+        }
+        callback();
+    };
+
+    request.send(JSON.stringify(sendObj));
+    //$('#loading').modal('show');
+}
+
+function deleteProject(callback) {
+    //get users key
+    var userKey = new URL(window.location.href).searchParams.get('key');
+    var projectKey = document.getElementById('id-holder').innerHTML;
+
+    var data = {
+        userKey: userKey,
+        projectKey: projectKey
+    }
+
+    //create ajax request
+    var request = new XMLHttpRequest();
+
+    var url = connectUrl + "/deleteProject/";
+
+    //open up a post requst to defined url
+    request.open('POST', url);
+    request.setRequestHeader("Content-type", "application/json");
+
+    //we will be getting a text response from server
+    request.responseType = "json";
+
+    //when we have gotten a response from the server, print it to the console
+    request.onload = function() {
+        //$('#loading').modal('hide');
+        var status = request.response.status;
+        if(status == 1) {
+            console.log("successfully deleted project");
+            var projects = user.projects;
+            var ind= -1;
+            for(var i = 0; i < projects.length; i++) {
+                if(projects[i].id == projectKey) {
+                    ind = i;
+                    break;
+                }
+            }
+
+            if(ind == -1) {
+                return res.status(400).send(JSON.stringify({"status": 0}));
+            }
+            projects.splice(ind, 1);
+
+            user.projects = projects;
+        } else {
+            console.log('failed to delete project');
+        }
+        callback();
+    };
+
+    request.send(JSON.stringify(data));
+}
+
 /**
  * Clears all entries in every form for event and project creation
  */
@@ -608,28 +736,18 @@ function displayUserProjects(user) {
                     cell.style.borderBottomWidth = '0px';
                 }
 
-                /*
                 projDiv.onclick = function() { 
                     //fill in edit modal with info
                     $('#editProjectModal').modal('toggle');
-                    $('#e_title_edit').val(event.title);
-                    $('#est_edit').val(event.startTime);
-                    $('#eet_edit').val(event.endTime);
-                    $('#recurring_edit').prop('checked', event.recurring);
-                    $('#esd_edit').val(event.startDate);
-                    if(event.recurring) {
-                        $('#ed_edit').prop('disabled', false);
-                        $('#ed_edit').val(event.endDate);
-                        $('#rec_edit').prop('disabled', false);
-                        $('#rec_edit').val(event.recurrency);
-                        $('#timeframe_edit').prop('disabled', false);
-                        $('#timeframe_edit').val(event.timeframe);
-                    }
-                    $('#e_desc_edit').val(event.description);
+                    $('#p_title_edit').val(projectObj.project.title);
+                    $('#pst_edit').val(projectObj.project.startDate);
+                    $('#pet_edit').val(projectObj.project.dueDate);
+                    $('#p_hours_edit').val(projectObj.project.expectedTimeHours);
+                    $('#p_min_edit').val(projectObj.project.expectedTimeMinutes);
+                    $('#p_desc_edit').val(projectObj.project.description)
                     //store events id for backend usage
-                    $('#id-holder').text(event.id);
+                    $('#id-holder').text(projectObj.project.id);
                 }
-                */
 
                 //in order to play the game, ya gotta know the rules
                 projDiv.onmouseover = function() {
