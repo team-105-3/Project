@@ -51,10 +51,11 @@
   flex-basis: 100%;
   padding-left: 1px;
   padding-right: 1px;
+  height: 100%;
 }
 
 .project {
-  z-index: 100000;
+  z-index: 1000;
   height: 100%;
   border-radius: 5px;
   width: 100%;
@@ -68,7 +69,7 @@
  
 
 .event {
-  z-index: 100000;
+  z-index: 1000;
   height: 100%;
   border-radius: 5px;
   width: 100%;
@@ -81,7 +82,15 @@
 }
 
 td {
-  height: 10px !important;
+  height: 100%;
+}
+
+tr {
+  height: 100%;
+}
+
+table {
+  height: 100%;
 }
 
 .event:hover {
