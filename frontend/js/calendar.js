@@ -31,13 +31,20 @@ function createCalendarEvent(callback) {
         fail = true;
     }
 
+    var startTime2Min = standard2Military(startTime);
+    var tst = startTime2Min[0] * 60 + startTime2Min[1];
+    var endTime2Min = standard2Military(endTime);
+    var est = endTime2Min[0] * 60 + endTime2Min[1];
+
+    if(est < tst) {
+        fail = true;
+    }
+
     $('#createEventModal').modal('toggle');
     clearAllEntries();
 
     if(fail) {
-        $('#createEventModal').on('hidden.bs.modal', function() {
-            $('#eventCreationFail').modal('toggle');
-        });
+        $('#eventCreationFail').modal('toggle');
         return;
     }
 
@@ -101,13 +108,11 @@ function saveEventChanges(callback) {
         fail = true;
     }
 
-    $('#createEventModal').modal('toggle');
+    $('#editEventModal').modal('toggle');
     clearAllEntries();
 
     if(fail) {
-        $('#createEventModal').on('hidden.bs.modal', function() {
-            $('#eventCreationFail').modal('toggle');
-        });
+        $('#eventCreationFail').modal('toggle');
         return;
     }
 
@@ -237,13 +242,12 @@ function createCalendarProject(callback) {
     clearAllEntries();
 
     if(fail) {
-        $('#createProjectModal').on('hidden.bs.modal', function() {
-            $('#projectCreationFail').modal('toggle');
-        });
+        $('#projectCreationFail').modal('toggle');
         return;
     }
 
-    var project = new Project(title, startDate, dueDate, expTimeHours, expTimeMin, desc, expTimeHours * 60 + expTimeMin);
+    var timeRemaining = parseInt(expTimeHours * 60) + parseInt(expTimeMin);
+    var project = new Project(title, startDate, dueDate, expTimeHours, expTimeMin, desc, timeRemaining);
 
     var idKey = new URL(window.location.href).searchParams.get('key');
 
@@ -294,18 +298,16 @@ function saveProjectChanges(callback) {
         fail = true;
     }
 
-    $('#createProjectModal').modal('toggle');
+    $('#editProjectModal').modal('toggle');
     clearAllEntries();
 
     if(fail) {
-        $('#createProjectModal').on('hidden.bs.modal', function() {
-            $('#projectCreationFail').modal('toggle');
-        });
+        $('#projectCreationFail').modal('toggle');
         return;
     }
 
     console.log(projectKey);
-    var project = new Project(title, startDate, dueDate, expTimeHours, expTimeMin, desc, expTimeHours * 60 + expTimeMin);
+    var project = new Project(title, startDate, dueDate, expTimeHours, expTimeMin, desc, parseInt(expTimeHours * 60) + parseInt(expTimeMin));
 
     var idKey = new URL(window.location.href).searchParams.get('key');
 
@@ -582,7 +584,7 @@ function calcProjectTimeSlotsForDay(user, date) {
     dayProjects.forEach(proj => {
         var time_r = Math.floor(proj.timeRemaining);
         var days_r = Math.round((new Date(proj.dueDate) - date) / (1000*60*60*24));
-        allotTimes.push((time_r / days_r) / 10);
+        allotTimes.push((time_r / days_r));
     });
 
     //sort dayEvents so lower start times are first in array
@@ -659,7 +661,7 @@ function calcProjectTimeSlotsForDay(user, date) {
                 if(j == 0) {
                     et = "8:00 AM";
                 } else {
-                    et = dayEvents[j].endTime;
+                    et = dayEvents[j - 1].endTime;
                 }
 
                 projectsWithTimeSlotsAndTotalTime.push({project: dayProjects[i], 
@@ -669,6 +671,11 @@ function calcProjectTimeSlotsForDay(user, date) {
                                                     });
                 timeSlots[j] -= allotTimes[i];
                 offsets[j] += allotTimes[i];
+                for(var k = 0; k < user.projects.length; k++) {
+                    if(user.projects[k].id == dayProjects[i].id) {
+                        user.projects[k].timeRemaining -= allotTimes[i];
+                    }
+                }
                 break;
             }
         }
@@ -780,6 +787,7 @@ function clearAllEventsAndProjects() {
     $('.project').remove();
     $('td').attr('rowspan', 1);
     $('.event-container').remove();
+    $('.project-container').remove();
     $('.cal-cell').css({'border-top-width': '1px', 'border-bottom-width': '1px'});
 }
 
@@ -807,11 +815,18 @@ function highlightDate(user) {
     document.getElementById(weekarr[user.currentUserDate.getDay()].split('&')[0]).style.backgroundColor = "lightskyblue";
 }
 
+function resetProjects(user) {
+    user.projects.forEach(p => {
+        p.timeRemaining = (parseInt(p.expectedTimeHours * 60)) + parseInt(p.expectedTimeMinutes);
+    })
+}
+
 //function to be called everytime user does something that updates UI
 function updateUI() {
     user.update(); //update current user projects and events
     displayDate(user); //display correct date in top left
     clearAllEventsAndProjects(); //reset calendar
+    resetProjects(user);
     displayUsersEvents(user); //display all events in calendar
     displayUserProjects(user);
     console.log(user); //log user status (for debugging)
