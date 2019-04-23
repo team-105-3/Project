@@ -33,7 +33,7 @@ User.prototype.isEventOnDay = function(date, event) {
 
     var multiplier = event.recurrency;
 
-    while(eventEndDate > currentDate && date > currentDate) {
+    while(eventEndDate >= currentDate && date >= currentDate) {
         if(datesEqual(currentDate, date)) {
             return true;
         } else {

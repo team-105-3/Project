@@ -495,6 +495,10 @@ function displayUsersEvents(user) {
                 eventDiv.id = event.title + "-" + i;
                 eventDiv.className = 'event ' + eventDiv.id;
 
+                eventDiv.title = event.title + " from " + event.startTime + " to " + event.endTime + ".";
+                eventDiv.setAttribute('data-toggle', 'tooltip');
+                eventDiv.setAttribute('data-placement', 'top');
+
                 //rules of the road
                 if(j == 0) {
                     eventDivContainer.style.paddingTop = startMin / 3 + "%";
@@ -715,6 +719,11 @@ function displayUserProjects(user) {
                 projDiv.id = projectObj.project.title + "-" + i;
                 projDiv.className = 'project ' + projDiv.id;
 
+                var prst = projectObj.startTime;
+                projDiv.title = projectObj.project.title + " from " + prst + " to " + mil2std(endHour, endMin) + ".";
+                projDiv.setAttribute('data-toggle', 'tooltip');
+                projDiv.setAttribute('data-placement', 'top');
+
                 //rules of the road
                 if(j == 0) {
                     projDivContainer.style.paddingTop = startMin / 3 + "%";
@@ -807,6 +816,12 @@ function standard2Military(str) {
     return [hour, min];   
 }
 
+function mil2std (hour, min) {
+    var stdhour = hour % 12;
+    var ampm = (hour < 12)?"AM":"PM";
+    return stdhour + ":" + min + " " + ampm;
+}
+
 //highlights the current day on the top of the calendar that corresponds to the current day in top left corner
 function highlightDate(user) {
     for(var i = 0; i < weekarr.length; i++) {
@@ -831,6 +846,9 @@ function updateUI() {
     displayUserProjects(user);
     console.log(user); //log user status (for debugging)
     highlightDate(user); //highlight current date in top bar
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 }
 
 /**
