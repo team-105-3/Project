@@ -91,3 +91,12 @@ td {
 .project:hover {
   cursor: pointer;
 }
+
+.color-picker {
+  border-width: 0px;
+  border-radius: 2px;
+}
+
+.color-picker:hover {
+  cursor: pointer;
+}

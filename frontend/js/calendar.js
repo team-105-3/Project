@@ -16,6 +16,7 @@ function createCalendarEvent(callback) {
     var startDate = document.getElementById('esd').value;
     var endDate = document.getElementById('ed').value;
     var desc = document.getElementById('e_desc').value;
+    var color = document.getElementById('ec_color').value;
 
     var rec = document.getElementById('rec').value;
     var timeframe = document.getElementById('timeframe').value;
@@ -48,7 +49,7 @@ function createCalendarEvent(callback) {
         return;
     }
 
-    var event = new Event(title, startTime, endTime, recurring, startDate, endDate, desc, rec, timeframe);
+    var event = new Event(title, startTime, endTime, recurring, startDate, endDate, desc, rec, timeframe, color);
 
     var idKey = new URL(window.location.href).searchParams.get('key');
 
@@ -96,6 +97,7 @@ function saveEventChanges(callback) {
     var desc = document.getElementById('e_desc_edit').value;
     var rec = document.getElementById('rec_edit').value;
     var timeframe = document.getElementById('timeframe_edit').value;
+    var color = document.getElementById('ee_color').value;
 
     console.log(rec, timeframe);
 
@@ -116,7 +118,7 @@ function saveEventChanges(callback) {
         return;
     }
 
-    var event = new Event(title, startTime, endTime, recurring, startDate, endDate, desc, rec, timeframe);
+    var event = new Event(title, startTime, endTime, recurring, startDate, endDate, desc, rec, timeframe, color);
 
     var idKey = new URL(window.location.href).searchParams.get('key');
 
@@ -232,6 +234,7 @@ function createCalendarProject(callback) {
     var expTimeHours = document.getElementById('p_hours').value;
     var expTimeMin = document.getElementById('p_min').value;
     var desc = document.getElementById('p_desc').value;
+    var color = document.getElementById('pc_color').value;
 
     var fail = false;
     if(emptyString(title) || emptyString(startDate) || emptyString(dueDate) || emptyString(expTimeHours) || emptyString(expTimeMin)) {
@@ -247,7 +250,7 @@ function createCalendarProject(callback) {
     }
 
     var timeRemaining = parseInt(expTimeHours * 60) + parseInt(expTimeMin);
-    var project = new Project(title, startDate, dueDate, expTimeHours, expTimeMin, desc, timeRemaining);
+    var project = new Project(title, startDate, dueDate, expTimeHours, expTimeMin, desc, timeRemaining, color);
 
     var idKey = new URL(window.location.href).searchParams.get('key');
 
@@ -292,6 +295,7 @@ function saveProjectChanges(callback) {
     var expTimeHours = document.getElementById('p_hours_edit').value;
     var expTimeMin = document.getElementById('p_min_edit').value;
     var desc = document.getElementById('p_desc_edit').value;
+    var color = document.getElementById('pe_color').value;
 
     var fail = false;
     if(emptyString(title) || emptyString(startDate) || emptyString(dueDate) || emptyString(expTimeHours)) {
@@ -307,7 +311,7 @@ function saveProjectChanges(callback) {
     }
 
     console.log(projectKey);
-    var project = new Project(title, startDate, dueDate, expTimeHours, expTimeMin, desc, parseInt(expTimeHours * 60) + parseInt(expTimeMin));
+    var project = new Project(title, startDate, dueDate, expTimeHours, expTimeMin, desc, parseInt(expTimeHours * 60) + parseInt(expTimeMin), color);
 
     var idKey = new URL(window.location.href).searchParams.get('key');
 
@@ -494,10 +498,15 @@ function displayUsersEvents(user) {
                 //eventDiv.style.height = "50%";
                 eventDiv.id = event.title + "-" + i;
                 eventDiv.className = 'event ' + eventDiv.id;
+                eventDiv.style.backgroundColor = event.color;
 
                 eventDiv.title = event.title + " from " + event.startTime + " to " + event.endTime + ".";
                 eventDiv.setAttribute('data-toggle', 'tooltip');
                 eventDiv.setAttribute('data-placement', 'top');
+                
+                var getCorrectColor = setContrast(hexToRgb(event.color))
+
+                eventDiv.style.color = (getCorrectColor == 'black')?"#303030":"#f2f2f2";
 
                 //rules of the road
                 if(j == 0) {
@@ -546,6 +555,7 @@ function displayUsersEvents(user) {
                     $('#e_desc_edit').val(event.description);
                     //store events id for backend usage
                     $('#id-holder').text(event.id);
+                    $('#ee_color').val(event.color);
                 }
 
                 //in order to play the game, ya gotta know the rules
@@ -724,6 +734,11 @@ function displayUserProjects(user) {
                 projDiv.setAttribute('data-toggle', 'tooltip');
                 projDiv.setAttribute('data-placement', 'top');
 
+                var getCorrectColor = setContrast(hexToRgb(projectObj.project.color))
+
+                projDiv.style.color = (getCorrectColor == 'black')?"#303030":"#f2f2f2";
+                projDiv.style.backgroundColor = projectObj.project.color;
+
                 //rules of the road
                 if(j == 0) {
                     projDivContainer.style.paddingTop = startMin / 3 + "%";
@@ -763,6 +778,7 @@ function displayUserProjects(user) {
                     $('#p_desc_edit').val(projectObj.project.description)
                     //store events id for backend usage
                     $('#id-holder').text(projectObj.project.id);
+                    $('#pe_color').val(projectObj.project.color);
                 }
 
                 //in order to play the game, ya gotta know the rules

@@ -190,7 +190,7 @@ function getAllEvents(callback) {
                                         element.endTime, element.recurring, 
                                         element.startDate, element.endDate, 
                                         element.description, element.recurrency, 
-                                        element.timeframe);
+                                        element.timeframe, element.color);
                 
                 console.log(event);
                 user.addEvent(event);
@@ -221,7 +221,7 @@ function getAllProjects(callback) {
                 let project = new Project(  element.title, element.startDate, 
                                             element.dueDate, element.expectedTimeHours,
                                             element.expectedTimeMinutes, element.description,
-                                            element.timeRemaining);
+                                            element.timeRemaining, element.color);
                 
                 user.addProject(project);
             });
