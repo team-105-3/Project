@@ -30,6 +30,7 @@
   cursor: pointer;
   margin: 5px;
 }
+
 .c-btn:hover {
   background-color: #28a745;
   color: white;
@@ -42,26 +43,69 @@
 
 .event-container {
   flex-basis: 100%;
-  padding-left: 0%;
-  padding-right: 0%;
+  padding-left: 1px;
+  padding-right: 1px;
 }
 
+.project-container {
+  flex-basis: 100%;
+  padding-left: 1px;
+  padding-right: 1px;
+  height: 100%;
+}
 
-.event {
-  z-index: 100000;
+.project {
+  z-index: 1000;
   height: 100%;
   border-radius: 5px;
   width: 100%;
   text-overflow: ellipsis;
   padding: 5px;
   margin: 0%;
+  background-color: orange;
+  text-align: center;
+  color: white;
+}
+ 
+
+.event {
+  z-index: 1000;
+  height: 100%;
+  border-radius: 5px;
+  width: 100%;
+  text-overflow: ellipsis;
+  padding: 5px;
+  margin: 0%;
+  background-color: deepskyblue;
+  text-align: center;
+  color: white;
 }
 
 td {
-  height: 10px !important;
+  height: 100%;
+}
+
+tr {
+  height: 100%;
+}
+
+table {
+  height: 100%;
 }
 
 .event:hover {
   cursor: pointer;
-  filter: brightness(80%);
+}
+
+.project:hover {
+  cursor: pointer;
+}
+
+.color-picker {
+  border-width: 0px;
+  border-radius: 2px;
+}
+
+.color-picker:hover {
+  cursor: pointer;
 }

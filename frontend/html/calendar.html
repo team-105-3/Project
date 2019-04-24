@@ -2,6 +2,10 @@
 <html>
     <head>
 
+        <meta charset="UTF-8"> 
+
+        <link rel="stylesheet" href="../css/normalize.css">
+
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 
@@ -99,7 +103,7 @@
             </div>
             
             <!--Event Creation Modal-->
-            <div class="modal fade" id="createEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal fade" id="createEventModal" tabindex="-1" role="dialog" aria-labelledby="event-creation-modal" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -241,25 +245,31 @@
                                 </script>
                             </div>
                             <br>
+
+                            <div class="form-group">
+                                <label for="ec_color">Event Color</label>
+                                <input class="color-picker" type="color" id="ec_color" value="#00bfff">
+                            </div>
                             
                             <!--Description-->
                             <div class="form-group">
                                 <label for="e_desc">Event Description</label>
                                 <textarea class="form-control entry" id="e_desc" rows="3"></textarea>
                             </div>
+
                         </div>
     
                         <!--Cancel and submit buttons-->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearAllEntries()">Cancel</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="createCalendarEvent()">Create Event</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="createCalendarEvent(updateUI)">Create Event</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!--Project Creation Modal-->
-            <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="project-creation-modal" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -342,6 +352,11 @@
                                     }
                                 </script>
                             </div>
+
+                            <div class="form-group">
+                                <label for="pc_color">Project Color</label>
+                                <input class="color-picker" type="color" id="pc_color" value="#FFA500">
+                            </div>
                             
                             <!--Description-->
                             <div class="form-group">
@@ -353,7 +368,7 @@
                         <!--Cancel and submit buttons-->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearAllEntries()">Cancel</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="createCalendarProject()">Create Project</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="createCalendarProject(updateUI)">Create Project</button>
                         </div>
                     </div>
                 </div>
@@ -364,13 +379,14 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Failed to create event</h5>
+                        <h5 class="modal-title">Failed to create / save event</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>One or more of the required entries for event creation was incomplete.</p>
+                        <p>One or more of the required entries for event creation was incomplete / missing or fields were
+                            entered incorrectly (ex. start time is after end time).</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
@@ -384,13 +400,13 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Failed to create project</h5>
+                        <h5 class="modal-title">Failed to create / save project</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>One or more of the required entries for project creation was incomplete.</p>
+                        <p>One or more of the required entries for project creation / saving was incomplete or missing.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
@@ -398,18 +414,283 @@
                     </div>
                 </div>
             </div>
+
+            <!--Edit Event Modal-->
+            <div class="modal fade" id="editEventModal" tabindex="-1" role="dialog" aria-labelledby="event-edit-modal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Create Event</h5>
+                        </div>
+    
+                        <!--Create Event Form-->
+                        <div class="modal-body">
+                            <!--Title-->
+                            <div class="form-group">
+                                <input type="text" class="form-control entry" id="e_title_edit" placeholder="Event Title">
+                            </div>
+    
+                            <!--Time-->
+                            <div class="row">
+                                <div class='col-sm-6'>
+                                    <div class="form-group">
+                                        <label for="e_start_time_edit">Start Time</label>
+                                        <div class='input-group date' id='datetimepicker1_edit'>
+                                            <input id="est_edit" type='text' class="form-control entry" id="e_start_time_edit"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#datetimepicker1_edit').datetimepicker({
+                                            format: 'LT'
+                                        });
+                                    });
+                                </script>
+                                <div class='col-sm-6'>
+                                    <div class="form-group">
+                                        <label for="e_end_time_edit">End Time</label>
+                                        <div class='input-group date' id='datetimepicker2_edit'>
+                                            <input id="eet_edit" type='text' class="form-control entry" id="e_end_time_edit"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#datetimepicker2_edit').datetimepicker({
+                                            format: 'LT'
+                                        });
+                                    });
+                                </script>
+                            </div>
+    
+                            <!--Recurring-->
+                            <div class="form-check">
+                                <div class="row">
+                                    <div class="col col-sm-4">
+                                        <label for="recurring_edit"> Recurring Event </label>
+                                    </div>
+                                    <div class="col col-sm-1">
+                                        <input class="form-check-input entry" type="checkbox" value="" id="recurring_edit">
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <!--Date Input-->
+                            <div class="row">
+                                <div class='col-md-6'>
+                                    <div class="form-group">
+                                        <label for="e_start_date_edit">Start Date</label>
+                                        <div class='input-group date' id='e_start_date_edit'>
+                                            <input id="esd_edit" type='text' class="form-control entry" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='col-md-6'>
+                                    <div class="form-group">
+                                        <label for="e_end_date_edit">End Date</label>
+                                        <div class='input-group date' id='e_end_date_edit'>
+                                            <input disabled id="ed_edit" type='text' class="form-control entry" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    document.getElementById('recurring_edit').onchange = function() {
+                                        document.getElementById('ed_edit').disabled = !this.checked;
+                                    };
+                                </script>
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#e_start_date_edit').datetimepicker({
+                                            format: "MM/DD/YYYY",
+                                        });
+                                        $('#e_end_date_edit').datetimepicker({
+                                            format: "MM/DD/YYYY",
+                                            useCurrent: false //Important! See issue #1075
+                                        });
+                                        $("#e_start_date_edit").on("dp.change", function (e) {
+                                            $('#e_end_date').data("DateTimePicker").minDate(e.date);
+                                        });
+                                        $("#e_end_date_edit").on("dp.change", function (e) {
+                                            $('#e_start_date').data("DateTimePicker").maxDate(e.date);
+                                        });
+                                    });
+                                </script>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col">
+                                    <label for="rec_edit">Recurrence</label>
+                                    <select disabled class="custom-select mr-sm-2" id="rec_edit">
+                                        <option selected>Choose...</option>
+                                        <option value="1">Every</option>
+                                        <option value="2">Every Other</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label class="mr-sm-2" for="timeframe_edit">Timeframe</label>
+                                    <select disabled class="custom-select mr-sm-2 my-1" id="timeframe_edit">
+                                        <option selected>Choose...</option>
+                                        <option value="1">Day</option>
+                                        <option value="2">Week</option>
+                                        <option value="3">Month</option>
+                                        <option value="4">Year</option>
+                                    </select>
+                                </div>
+                                <script>
+                                    document.getElementById('recurring_edit').onchange = function() {
+                                        document.getElementById('rec_edit').disabled = !this.checked;
+                                        document.getElementById('timeframe_edit').disabled = !this.checked;
+                                        document.getElementById('ed_edit').disabled = !this.checked;
+                                    };
+                                </script>
+                            </div>
+                            <br>
+
+                            <div class="form-group">
+                                <label for="ee_color">Event Color</label>
+                                <input class="color-picker" type="color" id="ee_color" value="#00bfff">
+                            </div>
+                            
+                            <!--Description-->
+                            <div class="form-group">
+                                <label for="e_desc_edit">Event Description</label>
+                                <textarea class="form-control entry" id="e_desc_edit" rows="3"></textarea>
+                            </div>
+                        </div>
+    
+                        <!--Cancel and submit buttons-->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteEvent(updateUI)" style="float: left;">Delete Event</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearAllEntries()">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="saveEventChanges(updateUI)">Save Changes</button>
+                            <p id="id-holder" style="display: none;"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Edit Project Modal-->
+            <div class="modal fade" id="editProjectModal" tabindex="-1" role="dialog" aria-labelledby="project-edit-modal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Create Project</h5>
+                        </div>
+
+                        <!--Create Project Form-->
+                        <div class="modal-body">
+                            <!--Title-->
+                            <div class="form-group">
+                                <input type="text" class="form-control entry" id="p_title_edit" placeholder="Project Title">
+                            </div>
+
+                            <!--Time-->
+                            <div class="row">
+                                <div class='col-sm-6'>
+                                    <div class="form-group">
+                                        <label for="p_start_time_edit">Start Date</label>
+                                        <div class='input-group date' id='datetimepickerPS_edit'>
+                                            <input id="pst_edit" type='text' class="form-control entry" id="p_start_time_edit"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#datetimepickerPS_edit').datetimepicker({
+                                            format: "MM/DD/YYYY"
+                                        });
+                                    });
+                                </script>
+                                <div class='col-sm-6'>
+                                    <div class="form-group">
+                                        <label for="p_end_time_edit">Due Date</label>
+                                        <div class='input-group date' id='datetimepickerPE_edit'>
+                                            <input id="pet_edit" type='text' class="form-control entry" id="p_end_time_edit"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#datetimepickerPE_edit').datetimepicker({
+                                            format: "MM/DD/YYYY"
+                                        });
+                                    });
+                                </script>
+                            </div>
+
+                            <!--Time Input-->
+                            <div class="row">
+                                <div class='col'>
+                                    <h4>Expected amount of time to finish:</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-6'>
+                                    <div class="form-group">
+                                        <label for="p_hours_edit">Hours</label>
+                                        <input id="p_hours_edit" type='number' class="form-control entry" />
+                                    </div>
+                                </div>
+                                <div class='col-md-6'>
+                                    <div class="form-group">
+                                        <label for="p_min_edit">Minutes</label>
+                                        <input id="p_min_edit" type='number' class="form-control entry" />
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    document.getElementById('p_hours_edit').onchange = function() {
+                                        this.value = Math.max(0, parseInt(this.value));
+                                    }
+
+                                    document.getElementById('p_min_edit').onchange = function() {
+                                        this.value = Math.max(0, Math.min(59, parseInt(this.value)));
+                                    }
+                                </script>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pe_color">Project Color</label>
+                                <input class="color-picker" type="color" id="pe_color" value="#FFA500">
+                            </div>
+
+                            <!--Description-->
+                            <div class="form-group">
+                                <label for="p_desc_edit">Project Description</label>
+                                <textarea class="form-control entry" id="p_desc_edit" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <!--Cancel and submit buttons-->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteProject(updateUI)" style="float: left;">Delete Event</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearAllEntries()">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="saveProjectChanges(updateUI)">Save Changes</button>
+                            <p id="id-holder" style="display: none;"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <script type="text/javascript">
-            //function to be called everytime user does something that updates UI
-            function updateUI() {
-                user.update(); //update current user projects and events
-                displayDate(user); //display correct date in top left
-                clearAllEventsAndProjects(); //reset calendar
-                displayUsersEvents(user); //display all events in calendar
-                console.log(user); //log user status (for debugging)
-                highlightDate(user); //highlight current date in top bar
-            }
-
             var user = new User();
             getAllEvents(updateUI);
             getAllProjects(updateUI);

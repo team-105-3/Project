@@ -1,4 +1,4 @@
-function Event(title, startTime, endTime, recurring, startDate, endDate, description, recurrency, timeframe) {
+function Event(title, startTime, endTime, recurring, startDate, endDate, description, recurrency, timeframe, color) {
     this.title = title;
     this.startTime = startTime;
     this.endTime = endTime;
@@ -8,12 +8,6 @@ function Event(title, startTime, endTime, recurring, startDate, endDate, descrip
     this.description = description;
     this.recurrency = recurrency;
     this.timeframe = timeframe;
-}
-
-Event.prototype.display = function(parent) {
-    var container = document.createElement("div");
-    container.className = "event";
-    var p = document.createTextNode(this.title);
-    container.appendChild(p);
-    document.body.appendChild(container);
+    this.color = color;
+    this.id = fastHash(this.title + this.startDate + this.startTime + this.description);
 }

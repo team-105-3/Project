@@ -32,7 +32,7 @@ function sendProjectReminders() {
 
                 //if user has no projects, stop executing
                 if(userProjects.length == 0) {
-                    continue;
+                    return;
                 } 
 
                 fs.readFile("credentials.json", function processClientSecrets(err, content) {
