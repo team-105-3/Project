@@ -22,7 +22,11 @@ const createProject = require('./back-js/createProject');
 const getProjects = require('./back-js/getProjects');
 const sendPasswordRecovery = require('./back-js/passwordRecovery');
 const resetPassword = require('./back-js/resetPassword');
-const sendProjectReminders = require('./back-js/emailReminders')
+const sendProjectReminders = require('./back-js/emailReminders');
+const deleteEvent = require('./back-js/deleteEvent');
+const editEvent = require('./back-js/editEvent');
+const editProject = require('./back-js/editProject');
+const deleteProject = require('./back-js/deleteProject');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly ' + 'https://www.googleapis.com/auth/gmail.send'];
@@ -160,6 +164,22 @@ router.post("/createProject", function(req, res) {
     createProject(req.body, res);
 });
 
+router.post("/editEvent", function(req, res) {
+    editEvent(req.body, res);
+});
+
+router.post("/editProject", function(req, res) {
+    editProject(req.body, res);
+});
+
+router.post("/deleteEvent", function(req, res) {
+    deleteEvent(req.body, res);
+});
+
+router.post("/deleteProject", function(req, res) {
+    deleteProject(req.body, res);
+});
+
 router.post("/getEvents", function(req, res) {
     getEvents(req.body, res);
 });
@@ -178,7 +198,9 @@ router.post("/resetPassword", function(req, res) {
 
 router.post('/deleteAllUsers', function (req, res) {
     const { key } = req.body;
-    if (key == process.env.DEL_USERS) {
+    console.log(key);
+    console.log(process.env.DEL_USERS);
+    if (key == 'goodbye') {
         User.deleteMany({}, function (err) {
             if (err) return res.status(400).send(JSON.stringify({"status": 0}));
             else return res.status(200).send(JSON.stringify({"status": 1}));

@@ -3,3 +3,4 @@ backend/pwrd.txt
 backend/credentials.json
 backend/token.json
 .DS_Store
+UnitTests/node_modules/

@@ -5,6 +5,7 @@ function User() {
     this.events = [];
     this.projects = [];
     this.currentEvents = [];
+    this.currentProjects = [];
     this.currentUserDate = new Date();
 }
 
@@ -16,6 +17,9 @@ User.prototype.addEvent = function(event) {
     this.update();
 }
 
+/**
+ * Checks if an event recurs / lands on given day
+ */
 User.prototype.isEventOnDay = function(date, event) {
     var s_parts = event.startDate.split('/');
     var currentDate = new Date(parseInt(s_parts[2]), parseInt(s_parts[0]-1), parseInt(s_parts[1]));
@@ -29,14 +33,14 @@ User.prototype.isEventOnDay = function(date, event) {
 
     var multiplier = event.recurrency;
 
-    while(eventEndDate > currentDate && date > currentDate) {
+    while(eventEndDate >= currentDate && date >= currentDate) {
         if(datesEqual(currentDate, date)) {
             return true;
         } else {
             if(event.timeframe == 1) {
                 currentDate.setDate(currentDate.getDate() + 1 * multiplier);
             } else if (event.timeframe == 2) {
-                currentDate.setDate(currentDate.getDate() + 14 * multiplier);
+                currentDate.setDate(currentDate.getDate() + 7 * multiplier);
             } else if (event.timeframe == 3) {
                 currentDate.setMonth(currentDate.getMonth() + 1 * multiplier);
             } else if (event.timeframe == 4) {
@@ -48,6 +52,9 @@ User.prototype.isEventOnDay = function(date, event) {
     return false;
 }
 
+/**
+ * Returns all of a users events on a given day
+ */
 User.prototype.getAllEventsOnDay = function(date) {
     var dailyEvents = [];
 
@@ -60,6 +67,9 @@ User.prototype.getAllEventsOnDay = function(date) {
     return dailyEvents;
 }
 
+/**
+ * Returns all of a users events for a given week based on given day
+ */
 User.prototype.getEventsForWeek = function(date) {
     var dateCopy = new Date(date);
     var firstDay = new Date(dateCopy.setDate(dateCopy.getDate() - dateCopy.getDay()));
@@ -78,11 +88,19 @@ User.prototype.getEventsForWeek = function(date) {
     return weeklyEvents;
 }
 
+/**
+ * Update a users weekly events based on given date
+ */
 User.prototype.update = function() {
     this.currentEvents = this.getEventsForWeek(this.currentUserDate);
     //console.log(this.currentEvents);
 }
 
+/**
+ * Determines if two dates are equal in value (same day, month, year)
+ * @param {*} date1 
+ * @param {*} date2 
+ */
 function datesEqual(date1, date2) {
     return date1.getDate() == date2.getDate() 
         && date1.getMonth() == date2.getMonth()
@@ -96,10 +114,66 @@ User.prototype.addProject = function(project) {
     this.projects.push(project);
 }
 
+User.prototype.decDate = function() {
+    this.currentUserDate.setDate(this.currentUserDate.getDate() - 7);
+}
+
+User.prototype.incDate = function() {
+    this.currentUserDate.setDate(this.currentUserDate.getDate() + 7);
+}
+
+
+User.prototype.isProjectOnDay = function(date, project) {
+    var s_parts = project.startDate.split('/');
+    var startDate = new Date(parseInt(s_parts[2]), parseInt(s_parts[0]-1), parseInt(s_parts[1]));
+
+    var p_parts = project.dueDate.split('/');
+    var endDate = new Date(parseInt(p_parts[2]), parseInt(p_parts[0] - 1), parseInt(p_parts[1]));
+
+    return startDate <= date && date <= endDate;
+}
+
+/**
+ * Returns all of a users events on a given day
+ */
+User.prototype.getAllProjectsOnDay = function(date) {
+    var dailyProjects = [];
+
+    this.projects.forEach(project => {
+        if(this.isProjectOnDay(date, project)) {
+            dailyProjects.push(project);
+        }
+    });
+
+    return dailyProjects;
+}
+
+/**
+ * Returns all of a users events for a given week based on given day
+ */
+User.prototype.getAllProjectsForWeek = function(date) {
+    var dateCopy = new Date(date);
+    var firstDay = new Date(dateCopy.setDate(dateCopy.getDate() - dateCopy.getDay()));
+
+    var currentDate = new Date(firstDay);
+
+    var weeklyProjects = [];
+    var dailyProjects = [];
+
+    for(var i = 0; i < 7; i++) {
+        var dailyProjects = [];
+        currentDate.setDate(currentDate.getDate() + Math.min(i, 1));
+        dailyProjects = this.getAllEventsOnDay(currentDate);
+        weeklyProjects.push(dailyProjects);
+    }
+
+    this.currentProjects = weeklyProjects;
+}
+
 /**
  * Requests all of a users events from the server and loads them into the user class object
  */
-function getAllEvents() {
+function getAllEvents(callback) {
     let loadEventsRequest = new XMLHttpRequest();
     let url = connectUrl + "/getEvents/";
     loadEventsRequest.open('POST', url);
@@ -116,11 +190,13 @@ function getAllEvents() {
                                         element.endTime, element.recurring, 
                                         element.startDate, element.endDate, 
                                         element.description, element.recurrency, 
-                                        element.timeframe);
+                                        element.timeframe, element.color);
                 
+                console.log(event);
                 user.addEvent(event);
             });
         }
+        //callback();
     }
     loadEventsRequest.send(JSON.stringify({"key": new URL(window.location.href).searchParams.get('key')}));
     //$('#loading').modal('show');
@@ -129,7 +205,7 @@ function getAllEvents() {
 /**
  * Requests all of a users projects from the server and loads them into the user class object
  */
-function getAllProjects() {
+function getAllProjects(callback) {
     let projRequest = new XMLHttpRequest();
     let url = connectUrl + "/getProjects/";
     projRequest.open('POST', url);
@@ -144,11 +220,13 @@ function getAllProjects() {
             status.forEach(element => {
                 let project = new Project(  element.title, element.startDate, 
                                             element.dueDate, element.expectedTimeHours,
-                                            element.expectedTimeMinutes, element.description);
+                                            element.expectedTimeMinutes, element.description,
+                                            element.timeRemaining, element.color);
                 
                 user.addProject(project);
             });
         }
+        callback();
     }
     projRequest.send(JSON.stringify({"key": new URL(window.location.href).searchParams.get('key')}));
     //$('#loading').modal('show');

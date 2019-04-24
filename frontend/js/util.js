@@ -37,3 +37,31 @@ function validatePassword(password) {
     return !emptyString(password);
 }
 
+//non secure hash, used to generate unique id for events and projects
+function fastHash(str) {
+    var hash = 0, i, chr;
+    if (str.length === 0) return hash;
+    for (i = 0; i < str.length; i++) {
+        chr   = str.charCodeAt(i);
+        hash  = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+}
+
+function hexToRgb(hex) {
+    // turn hex val to RGB
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result
+        ? {
+              r: parseInt(result[1], 16),
+              g: parseInt(result[2], 16),
+              b: parseInt(result[3], 16)
+          }
+        : null
+}
+
+// calc to work out if it will match on black or white better
+function setContrast (rgb) {
+    return ((rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000 > 125) ? 'black' : 'white';
+}

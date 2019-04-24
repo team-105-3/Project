@@ -1,3 +1,6 @@
+/**
+ * Sends request to server to send password recovery email to given email address
+ */
 function recoverPassword() {
     var email = document.getElementById('email').value;
 

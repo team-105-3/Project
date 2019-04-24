@@ -3,6 +3,11 @@ var fs = require('fs');
 const {google} = require('googleapis');
 
 module.exports = {
+    /**
+     * Sends email using GMail API
+     * @param {*} auth 
+     * @param {*} message 
+     */
     sendMessage: function(auth, message) {
         var gmail = google.gmail({version: "v1", auth});
         var request = gmail.users.messages.send({
@@ -15,6 +20,13 @@ module.exports = {
         return true;
     },
     
+    /**
+     * Creates correct formatting for email to send
+     * @param {Who email is sent from (us)} from 
+     * @param {Who email is sent to} to 
+     * @param {Subject line of email} subject 
+     * @param {Message body of email} message 
+     */
     createEmail: function(from, to, subject, message) {
         var str = [
                 "Content-Type: text/plain; charset=\"UTF-8\"\n",
@@ -29,6 +41,12 @@ module.exports = {
         return Base64.encodeURI(str);
     },
 
+    /**
+     * Authorizes out API status and sends email
+     * @param {API Credentials} credentials 
+     * @param {sendMessage function} callback 
+     * @param {Properly formatted email from createEmail function} message 
+     */
     authorizeAPI: function(credentials, callback, message) {
         const {client_secret, client_id, redirect_uris} = credentials.installed;
         const oAuth2Client = new google.auth.OAuth2(
