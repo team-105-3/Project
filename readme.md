@@ -1,3 +1,19 @@
+For users:
+
+SmartCal is tool, made by and for students, to put an end to wasting time. SmartCal automatically looks for gaps in your busy class and work schedule to help you find the time to get things done.
+
+SmartCal splits your schedule into events and projects. Events are things that are fixed into you schedule such as classes, work, etc. Projects are things that need to get done, but it doesn't really matter when you work on them, such as homework, essays, studying. After putting your events into your schedule, SmartCal will look at your free time in the calendar and automatically schedule time for you to work on your projects. Our system will also send you email based reminders on when you have projects due.
+
+For developers:
+
+All frontend code (homepage, login, registration, calendar, frontend js, etc) is located in the frontend directory.
+
+All backend server code is located in the backend directory
+
+All of our test cases are located in the UnitTests directory.
+
+Info on how to build our app, (frontend, backend, and unit tests) is listed below.
+
 To run backend:
 1. Install [`node.js` and `npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) and [`mongodb`](https://docs.mongodb.com/manual/installation/)
 2. After you have `node.js` and `npm` installed, cd into the backend folder
